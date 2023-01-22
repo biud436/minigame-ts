@@ -8,15 +8,21 @@ export interface ITextureManager {
 
 export class TextureManager implements ITextureManager {
     private textureMap: Map<string, HTMLImageElement> = new Map();
-    private onLoadedCallback: Map<string, () => void> = new Map();
+    private onLoadedCallback: Map<string, (img: HTMLImageElement) => void> =
+        new Map();
+    static MAX_POLL_SIZE: number = 20;
 
     load(filename: string, id: string): boolean {
         const image = new Image();
+
+        this.onLoadedCallback.set(id, (img: HTMLImageElement) => {
+            this.textureMap.set(id, img);
+        });
+
         image.src = filename;
         image.onload = () => {
-            this.onLoadedCallback.get(id)?.();
+            this.onLoadedCallback.get(id)?.(image);
         };
-        this.textureMap.set(id, image);
 
         return true;
     }
@@ -29,5 +35,15 @@ export class TextureManager implements ITextureManager {
         }
 
         return isRemoved;
+    }
+
+    update(): void {
+        this.onLoadedCallback.forEach((callback, id) => {
+            if (this.textureMap.has(id)) {
+                callback(this.textureMap.get(id)!);
+            }
+        });
+
+        this.onLoadedCallback.clear();
     }
 }
