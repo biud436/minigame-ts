@@ -33,7 +33,7 @@ export class MapState implements IGameState {
             console.log("success");
         }
 
-        tile.setX(100).setY(400);
+        tile.setX(100).setY(400).setOpacity(128).setAngle(45);
 
         this.gameObjects.push(tile);
 
