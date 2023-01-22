@@ -64,8 +64,8 @@ export class Sprite extends GameObject implements ISprite {
 
         this.maxFrame = Math.max(1, maxFrames);
 
-        // this.setFrames(0, this.maxFrame);
-        // this.setCurrentFrame(0);
+        this.setFrames(0, this.maxFrame);
+        this.setCurrentFrame(0);
 
         this.spriteData.frameDelay = 0;
         this.animationTime = 0;
