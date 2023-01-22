@@ -1,11 +1,13 @@
 import { GameObject } from "./game-object";
 import { Matrix } from "./matrix";
+import { Rect } from "./rect";
 
 export class GameText extends GameObject {
     private text: string;
     private color: string;
     private font: string;
     private matrix: Matrix;
+    private position: Pick<Rect, "x" | "y">;
 
     constructor(text: string, color: string, font: string) {
         super();
@@ -13,20 +15,27 @@ export class GameText extends GameObject {
         this.color = color;
         this.font = font;
         this.matrix = new Matrix();
+        this.position = { x: 0, y: 0 };
     }
 
     updatePosition(elapsed: number) {
-        this.matrix.translate(this.matrix.e, this.matrix.f + 2);
+        this.position.x = this.matrix.e;
+        this.position.y = this.matrix.f + 2;
 
-        if (this.matrix.f > 500) {
-            this.matrix.translate(0, 50);
+        if (this.position.y > 500) {
+            this.position.x = 0;
+            this.position.y = 50;
         }
+    }
 
+    updateTransform() {
+        this.matrix.translate(this.position.x, this.position.y);
         this.matrix.update();
     }
 
     update(elapsed: number): void {
         this.updatePosition(elapsed);
+        this.updateTransform();
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
