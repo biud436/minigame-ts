@@ -27,6 +27,7 @@ export class MapState implements IGameState {
 
         TextureManager.getInstance().load("/assets/tile1.png", "tile1");
 
+        // 비동기 로더가 필요할 듯?
         const tile = new Sprite();
         if (tile.initialize(0, 0, 32, 32, 1, "tile1")) {
             console.log("success");
