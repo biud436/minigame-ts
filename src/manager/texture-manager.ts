@@ -12,6 +12,18 @@ export class TextureManager implements ITextureManager {
     private onLoadedCallback: Map<string, (img: Texture2D) => void> = new Map();
     static MAX_POLL_SIZE: number = 20;
 
+    private static INSTANCE: TextureManager;
+
+    private constructor() {}
+
+    static getInstance(): TextureManager {
+        if (!TextureManager.INSTANCE) {
+            TextureManager.INSTANCE = new TextureManager();
+        }
+
+        return TextureManager.INSTANCE;
+    }
+
     load(filename: string, id: string): boolean {
         if (this.textureMap.has(id)) {
             return false;
@@ -45,6 +57,10 @@ export class TextureManager implements ITextureManager {
         return isRemoved;
     }
 
+    valid(textureId: string): boolean {
+        return this.textureMap.has(textureId);
+    }
+
     /**
      * 이벤트 업데이트
      */
@@ -59,4 +75,16 @@ export class TextureManager implements ITextureManager {
     isValidPoolSize(): boolean {
         return this.textureMap.size < TextureManager.MAX_POLL_SIZE;
     }
+
+    renderFrame(
+        ctx: CanvasRenderingContext2D,
+        textureId: string,
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        rect: Rect,
+        opacity: number,
+        transform: Matrix
+    ): void {}
 }

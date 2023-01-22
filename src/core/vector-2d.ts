@@ -46,4 +46,9 @@ export class Vector2D {
     public dot(vector: Vector2D): number {
         return this._x * vector.x + this._y * vector.y;
     }
+
+    public set(x: number, y: number): void {
+        this._x = x;
+        this._y = y;
+    }
 }
