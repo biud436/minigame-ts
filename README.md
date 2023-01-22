@@ -4,7 +4,7 @@ This is a simple game engine written in TypeScript.
 
 ## Structure
 
-App -> Finite State Machine -> Render Clear -> Update States -> Update Game Objects -> Render States -> Render Game Objects
+App (Main Entry Point) -> Finite State Machine -> Render Clear -> Update States -> Update Game Objects -> Render States -> Render Game Objects
 
 # Setup
 
