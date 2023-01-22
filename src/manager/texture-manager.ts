@@ -13,6 +13,7 @@ export class TextureManager implements ITextureManager {
     static MAX_POLL_SIZE: number = 20;
 
     private static INSTANCE: TextureManager;
+    private static NORMAL_TRANSFORM: Matrix = new Matrix();
 
     private constructor() {}
 
@@ -86,5 +87,38 @@ export class TextureManager implements ITextureManager {
         rect: Rect,
         opacity: number,
         transform: Matrix
-    ): void {}
+    ): void {
+        if (!this.valid(textureId)) {
+            return;
+        }
+
+        const currentTexture = this.textureMap.get(textureId);
+        const normalTransform = TextureManager.NORMAL_TRANSFORM;
+
+        ctx.save();
+        this.setWorldTransform(ctx, transform);
+
+        /**
+         * 투명도 설정
+         */
+        ctx.globalAlpha = opacity / 255;
+        ctx.drawImage(
+            currentTexture!.texture,
+            0,
+            0,
+            width,
+            height,
+            rect.x,
+            rect.y,
+            width,
+            height
+        );
+
+        this.setWorldTransform(ctx, normalTransform);
+        ctx.restore();
+    }
+
+    setWorldTransform(ctx: CanvasRenderingContext2D, transform: Matrix): void {
+        ctx.setTransform(transform.toTransformData());
+    }
 }

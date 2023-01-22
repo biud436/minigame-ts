@@ -79,6 +79,15 @@ export class Matrix {
     }
 
     toTransformData() {
-        return [this.a, this.b, this.c, this.d, this.e, this.f];
+        const { a, b, c, d, e, f } = this;
+
+        return {
+            a,
+            b,
+            c,
+            d,
+            e,
+            f,
+        };
     }
 }
