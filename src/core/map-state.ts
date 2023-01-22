@@ -11,6 +11,10 @@ export class MapState implements IGameState {
     update(elapsed: number): void {
         for (const object of this.gameObjects) {
             object.update(elapsed);
+
+            if (object instanceof Sprite) {
+                object.setAngle(object.getAngle() + 1);
+            }
         }
     }
 
