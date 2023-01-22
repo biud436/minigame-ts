@@ -83,13 +83,17 @@ export class Sprite extends GameObject implements ISprite {
         }
     }
 
-    update(elapsed: number): void {
+    updateTexture(): void {
         // 텍스쳐가 로드되지 않았다면 로드가 완료될 때까지 대기 (브라우저 특성상)
         if (!TextureManager.getInstance().valid(this.spriteData.id)) {
             this.isInitialized = false;
         } else {
             this.isInitialized = true;
         }
+    }
+
+    update(elapsed: number): void {
+        this.updateTexture();
 
         if (!this.isInitialized) {
             return;
