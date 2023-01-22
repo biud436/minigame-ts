@@ -15,7 +15,7 @@ export class GameText extends GameObject {
         this.matrix = new Matrix();
     }
 
-    update(elapsed: number): void {
+    updatePosition(elapsed: number) {
         this.matrix.translate(this.matrix.e, this.matrix.f + 2);
 
         if (this.matrix.f > 500) {
@@ -23,6 +23,10 @@ export class GameText extends GameObject {
         }
 
         this.matrix.update();
+    }
+
+    update(elapsed: number): void {
+        this.updatePosition(elapsed);
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
