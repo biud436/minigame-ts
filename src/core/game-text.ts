@@ -19,11 +19,9 @@ export class GameText extends GameObject {
     }
 
     updatePosition(elapsed: number) {
-        this.position.x = this.matrix.e;
-        this.position.y = this.matrix.f + 2;
+        this.position.y = this.position.y + 2;
 
         if (this.position.y > 500) {
-            this.position.x = 0;
             this.position.y = 50;
         }
     }
