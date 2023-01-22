@@ -17,4 +17,20 @@ export class SpriteData {
     endFrame!: number;
 
     opacity!: number;
+
+    constructor() {
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.width = 4;
+        this.height = 4;
+        this.scale = 1.0;
+        this.rotation = 0.0;
+        this.id = "none";
+        this.frameDelay = 0.0;
+        this.startFrame = 0;
+        this.endFrame = 1;
+
+        this.rect = new Rect(0, 0, 4, 4);
+        this.opacity = 255;
+    }
 }
