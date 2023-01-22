@@ -16,7 +16,7 @@ export class GameText extends GameObject {
     }
 
     update(elapsed: number): void {
-        this.matrix.translate(this.matrix.e, this.matrix.f + 5000 / elapsed);
+        this.matrix.translate(this.matrix.e, this.matrix.f + 2);
 
         if (this.matrix.f > 500) {
             this.matrix.translate(0, 50);
