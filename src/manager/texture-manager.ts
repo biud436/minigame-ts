@@ -40,11 +40,15 @@ export class TextureManager implements ITextureManager {
 
         this.onLoadedCallback.set(id, (img: Texture2D) => {
             this.textureMap.set(id, img);
+            console.log("텍스쳐 로드 완료: " + id);
         });
 
         image.src = filename;
         image.onload = () => {
             this.onLoadedCallback.get(id)?.(Texture2D.of(id, image));
+        };
+        image.onerror = (err) => {
+            console.error(err);
         };
 
         return true;

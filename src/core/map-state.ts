@@ -1,6 +1,8 @@
+import { TextureManager } from "../manager/texture-manager";
 import { GameObject } from "./game-object";
 import { IGameState } from "./game-state";
 import { GameText } from "./game-text";
+import { Sprite } from "./sprite";
 
 export class MapState implements IGameState {
     public static readonly ID = "MAP";
@@ -22,6 +24,17 @@ export class MapState implements IGameState {
         this.gameObjects.push(
             new GameText("Hello World", "white", "30px Arial")
         );
+
+        TextureManager.getInstance().load("/assets/tile1.png", "tile1");
+
+        const tile = new Sprite();
+        if (tile.initialize(0, 0, 32, 32, 1, "tile1")) {
+            console.log("success");
+        }
+
+        tile.setX(100).setY(400);
+
+        this.gameObjects.push(tile);
 
         return true;
     }

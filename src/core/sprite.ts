@@ -72,12 +72,6 @@ export class Sprite extends GameObject implements ISprite {
 
         this.isVisible = true;
 
-        if (!TextureManager.getInstance().valid(textureId)) {
-            this.isInitialized = false;
-        } else {
-            this.isInitialized = true;
-        }
-
         return this.isInitialized;
     }
 
@@ -90,6 +84,13 @@ export class Sprite extends GameObject implements ISprite {
     }
 
     update(elapsed: number): void {
+        // 텍스쳐가 로드되지 않았다면 로드가 완료될 때까지 대기 (브라우저 특성상)
+        if (!TextureManager.getInstance().valid(this.spriteData.id)) {
+            this.isInitialized = false;
+        } else {
+            this.isInitialized = true;
+        }
+
         if (!this.isInitialized) {
             return;
         }

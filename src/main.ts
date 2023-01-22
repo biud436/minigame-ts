@@ -9,7 +9,7 @@ export type MiniGameBootstrapApplication = HTMLDivElement | null;
 export class App {
     private application!: MiniGameBootstrapApplication;
     private gameCanvas?: GameCanvas;
-    private gameContext: CanvasRenderingContext2D | null = null;
+    public gameContext: CanvasRenderingContext2D | null = null;
     private stateMachine: GameStateMachine = new GameStateMachine();
 
     private lastElapsed: number = 0;

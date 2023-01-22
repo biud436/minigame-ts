@@ -19,6 +19,7 @@ export class SpriteData {
     opacity!: number;
 
     constructor() {
+        this.position = new Vector2D(0, 0);
         this.offsetX = 0;
         this.offsetY = 0;
         this.width = 4;
