@@ -1,23 +1,10 @@
 import { Matrix } from "../core/matrix";
 import { Rect } from "../core/rect";
+import { Texture2D } from "../core/texture-2d";
 
 export interface ITextureManager {
     load(filename: string, id: string): boolean;
     remove(id: string): boolean;
-}
-
-export class Texture2D {
-    id: string;
-    texture: HTMLImageElement;
-
-    constructor(id: string, texture: HTMLImageElement) {
-        this.id = id;
-        this.texture = texture;
-    }
-
-    static of(id: string, texture: HTMLImageElement): Texture2D {
-        return new Texture2D(id, texture);
-    }
 }
 
 export class TextureManager implements ITextureManager {
@@ -59,7 +46,7 @@ export class TextureManager implements ITextureManager {
     }
 
     /**
-     * Update listeners
+     * 이벤트 업데이트
      */
     update(): void {
         this.onLoadedCallback.forEach((callback, id) => {

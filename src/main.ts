@@ -1,3 +1,5 @@
+import { ErrorBoundary } from "./core/error";
+import { GameCanvas } from "./core/game-canvas";
 import { GameStateMachine } from "./core/game-state-machine";
 import { GameText } from "./core/game-text";
 import { MapState } from "./core/map-state";
@@ -6,27 +8,27 @@ export type MiniGameBootstrapApplication = HTMLDivElement | null;
 
 export class App {
     private application!: MiniGameBootstrapApplication;
-    private gameCanvas: HTMLCanvasElement | null = null;
+    private gameCanvas?: GameCanvas;
     private gameContext: CanvasRenderingContext2D | null = null;
     private stateMachine: GameStateMachine = new GameStateMachine();
 
     private lastElapsed: number = 0;
     private animationProviderId: number = 0;
 
-    constructor() {
+    constructor() {}
+
+    start() {
         this.initWithCanvas();
+        this.update(1.0);
     }
 
     initWithCanvas(): void {
         const application = document.querySelector<HTMLDivElement>("#app");
         if (!application) return;
-        this.gameCanvas = document.createElement("canvas");
-        this.gameCanvas.width = 800;
-        this.gameCanvas.height = 600;
+        this.gameCanvas = new GameCanvas(800, 600);
+        this.gameContext = this.gameCanvas.context;
 
-        this.gameContext = this.gameCanvas.getContext("2d");
-
-        application.appendChild(this.gameCanvas);
+        application.appendChild(this.gameCanvas.element);
 
         this.setApplication(application);
 
@@ -71,7 +73,8 @@ export class App {
             this.update.bind(this)
         );
     }
+
+    dispose() {}
 }
 
-const app = new App();
-app.update(1.0);
+const errorBoundary = new ErrorBoundary(new App());
