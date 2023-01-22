@@ -42,7 +42,7 @@ export class GameText extends GameObject {
         ctx.fillStyle = this.color;
         ctx.font = this.font;
 
-        ctx.fillText(this.text, 50 + this.matrix.e, 50 + this.matrix.f);
+        ctx.fillText(this.text, 50 + this.position.x, 50 + this.position.y);
     }
 
     destroy(): void {
