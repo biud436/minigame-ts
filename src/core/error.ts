@@ -1,4 +1,5 @@
 import { App } from "../main";
+import { GameErrorState } from "./game-error-state";
 import { GameText } from "./game-text";
 
 /**
@@ -23,17 +24,7 @@ export class ErrorBoundary {
     }
 
     printError(message: string) {
-        if (this.app.gameContext) {
-            this.app.gameContext.fillStyle = "black";
-            this.app.gameContext.fillRect(0, 0, 800, 600);
-
-            this.app.gameContext.save();
-            this.app.gameContext.setTransform(1, 0, 0, 1, 10, 600 / 2 - 100);
-
-            const text = new GameText(message, "yellow", "30px Arial");
-            text.draw(this.app.gameContext);
-
-            this.app.gameContext.restore();
-        }
+        const fsm = this.app.getFSM();
+        fsm.pushState(new GameErrorState(message));
     }
 }

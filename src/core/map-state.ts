@@ -1,4 +1,6 @@
+import { App } from "../main";
 import { TextureManager } from "../manager/texture-manager";
+import { GameErrorState } from "./game-error-state";
 import { GameObject } from "./game-object";
 import { IGameState } from "./game-state";
 import { GameText } from "./game-text";
@@ -42,7 +44,11 @@ export class MapState implements IGameState {
                 this.gameObjects.push(tile);
             })
             .catch((e) => {
-                throw e;
+                App.getInstance()
+                    .getFSM()
+                    .pushState(
+                        new GameErrorState(" 텍스쳐 tile1을 찾지 못했습니다.")
+                    );
             });
 
         return true;

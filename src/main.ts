@@ -15,11 +15,25 @@ export class App {
     private lastElapsed: number = 0;
     private animationProviderId: number = 0;
 
-    constructor() {}
+    private static INSTANCE: App;
+
+    private constructor() {}
+
+    static getInstance(): App {
+        if (!App.INSTANCE) {
+            App.INSTANCE = new App();
+        }
+
+        return App.INSTANCE;
+    }
 
     start() {
         this.initWithCanvas();
         this.update(1.0);
+    }
+
+    getFSM(): GameStateMachine {
+        return this.stateMachine;
     }
 
     initWithCanvas(): void {
@@ -77,4 +91,4 @@ export class App {
     dispose() {}
 }
 
-const errorBoundary = new ErrorBoundary(new App());
+const errorBoundary = new ErrorBoundary(App.getInstance());

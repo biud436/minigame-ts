@@ -9,6 +9,9 @@ export class GameText extends GameObject {
     private matrix: Matrix;
     private position: Pick<Rect, "x" | "y">;
 
+    private width: number = 0;
+    private height: number = 0;
+
     constructor(text: string, color: string, font: string) {
         super();
         this.text = text;
@@ -40,10 +43,21 @@ export class GameText extends GameObject {
         ctx.fillStyle = this.color;
         ctx.font = this.font;
 
-        ctx.fillText(this.text, 50 + this.position.x, 50 + this.position.y);
+        ctx.fillText(this.text, this.position.x, this.position.y);
+
+        this.width = ctx.measureText(this.text).width;
+        this.height = parseInt(this.font, 10);
     }
 
     destroy(): void {
         throw new Error("Method not implemented.");
+    }
+
+    getWidth(): number {
+        return this.width;
+    }
+
+    getHeight(): number {
+        return this.height;
     }
 }
