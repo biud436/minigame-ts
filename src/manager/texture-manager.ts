@@ -3,7 +3,7 @@ import { Rect } from "../core/rect";
 import { Texture2D } from "../core/texture-2d";
 
 export interface ITextureManager {
-    load(filename: string, id: string): boolean;
+    load(filename: string, id: string): Promise<boolean>;
     remove(id: string): boolean;
 }
 
@@ -25,14 +25,14 @@ export class TextureManager implements ITextureManager {
         return TextureManager.INSTANCE;
     }
 
-    load(filename: string, id: string): boolean {
+    load(filename: string, id: string): Promise<boolean> {
         if (this.textureMap.has(id)) {
-            return false;
+            return Promise.reject();
         }
 
         if (!this.isValidPoolSize()) {
             console.error("텍스쳐 풀 사이즈가 초과되었습니다.");
-            return false;
+            return Promise.reject();
         }
 
         // Create image
@@ -44,14 +44,16 @@ export class TextureManager implements ITextureManager {
         });
 
         image.src = filename;
-        image.onload = () => {
-            this.onLoadedCallback.get(id)?.(Texture2D.of(id, image));
-        };
-        image.onerror = (err) => {
-            console.error(err);
-        };
 
-        return true;
+        return new Promise((resolve, reject) => {
+            image.onload = () => {
+                this.onLoadedCallback.get(id)?.(Texture2D.of(id, image));
+                resolve(true);
+            };
+            image.onerror = (err) => {
+                reject(err);
+            };
+        });
     }
 
     remove(id: string): boolean {

@@ -29,17 +29,21 @@ export class MapState implements IGameState {
             new GameText("Hello World", "white", "30px Arial")
         );
 
-        TextureManager.getInstance().load("/assets/tile1.png", "tile1");
+        TextureManager.getInstance()
+            .load("/assets/tile1.png", "tile1")
+            .then(() => {
+                const tile = new Sprite();
+                if (tile.initialize(0, 0, 32, 32, 1, "tile1")) {
+                    console.log("success");
+                }
 
-        // 비동기 로더가 필요할 듯?
-        const tile = new Sprite();
-        if (tile.initialize(0, 0, 32, 32, 1, "tile1")) {
-            console.log("success");
-        }
+                tile.setX(100).setY(400).setOpacity(128).setAngle(45);
 
-        tile.setX(100).setY(400).setOpacity(128).setAngle(45);
-
-        this.gameObjects.push(tile);
+                this.gameObjects.push(tile);
+            })
+            .catch((e) => {
+                throw e;
+            });
 
         return true;
     }
