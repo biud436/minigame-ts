@@ -16,7 +16,7 @@ export class Sound {
     playOnce(filename: string): void {
         const audio = new Audio(filename);
         audio.loop = false;
-        audio.volume = 0.2;
+        audio.volume = 0.5;
         audio.play();
     }
 

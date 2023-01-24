@@ -2,6 +2,7 @@ import { GameObject } from "./game-object";
 import { Input } from "./input";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
+import { Sound } from "./sound";
 
 export class GameText extends GameObject {
     private text: string;
@@ -23,15 +24,19 @@ export class GameText extends GameObject {
     }
 
     updatePosition(elapsed: number) {
-        if (Input.getInstance().isKeyDown("ArrowLeft")) {
+        if (Input.getInstance().isKeyPress("ArrowLeft")) {
             this.position.x = this.position.x - 10;
-        } else if (Input.getInstance().isKeyDown("ArrowRight")) {
+        } else if (Input.getInstance().isKeyPress("ArrowRight")) {
             this.position.x = this.position.x + 10;
         }
         this.position.y = this.position.y + 2;
 
         if (this.position.y > 500) {
             this.position.y = 50;
+        }
+
+        if (Input.getInstance().isKeyPress("Shift")) {
+            Sound.getInstance().playOnce("/assets/wind.ogg");
         }
     }
 

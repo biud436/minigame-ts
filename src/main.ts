@@ -88,6 +88,7 @@ export class App {
         this.stateMachine.update(elapsed - this.lastElapsed);
 
         this.render();
+        Input.getInstance().update();
 
         this.animationProviderId = window.requestAnimationFrame(
             this.update.bind(this)

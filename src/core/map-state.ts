@@ -28,10 +28,6 @@ export class MapState implements IGameState {
                 );
             }
         }
-
-        if (Input.getInstance().isKeyDown("Shift")) {
-            Sound.getInstance().playOnce("/assets/wind.ogg");
-        }
     }
 
     render(ctx: CanvasRenderingContext2D): void {

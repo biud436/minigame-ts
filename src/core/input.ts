@@ -52,7 +52,18 @@ export class Input {
         this.mouse.y = e.clientY;
     }
 
+    /**
+     * 한 번 눌렀다가 떼는 경우
+     * @param key
+     * @returns
+     */
     isKeyDown(key: string): boolean {
+        const prev = this.keyPrevMap.get(key) ?? false;
+
+        return !prev && (this.keyMap.get(key) ?? false);
+    }
+
+    isKeyPress(key: string): boolean {
         return this.keyMap.get(key) ?? false;
     }
 
