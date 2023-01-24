@@ -1,7 +1,9 @@
 import { ErrorBoundary } from "./core/error";
 import { GameCanvas } from "./core/game-canvas";
+import { GameErrorState } from "./core/game-error-state";
 import { GameStateMachine } from "./core/game-state-machine";
 import { GameText } from "./core/game-text";
+import { Input } from "./core/input";
 import { MapState } from "./core/map-state";
 
 export type MiniGameBootstrapApplication = HTMLDivElement | null;
@@ -49,6 +51,10 @@ export class App {
         this.stateMachine.pushState(new MapState());
     }
 
+    initiWithInput(): void {
+        Input.getInstance().initWithEventHandlers();
+    }
+
     clear() {
         const { gameContext: context } = this;
         if (!context) return;
@@ -85,6 +91,13 @@ export class App {
 
         this.animationProviderId = window.requestAnimationFrame(
             this.update.bind(this)
+        );
+    }
+
+    catchError(e: any) {
+        const fsm = this.getFSM();
+        fsm.pushState(
+            new GameErrorState(e.message ? e.message : "오류가 발생하였습니다.")
         );
     }
 

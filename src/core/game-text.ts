@@ -1,4 +1,5 @@
 import { GameObject } from "./game-object";
+import { Input } from "./input";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 
@@ -22,6 +23,11 @@ export class GameText extends GameObject {
     }
 
     updatePosition(elapsed: number) {
+        if (Input.getInstance().isKeyDown("ArrowLeft")) {
+            this.position.x = this.position.x - 10;
+        } else if (Input.getInstance().isKeyDown("ArrowRight")) {
+            this.position.x = this.position.x + 10;
+        }
         this.position.y = this.position.y + 2;
 
         if (this.position.y > 500) {
@@ -32,6 +38,12 @@ export class GameText extends GameObject {
     updateTransform() {
         this.matrix.translate(this.position.x, this.position.y);
         this.matrix.update();
+    }
+
+    setText(text: string): GameText {
+        this.text = text;
+
+        return this;
     }
 
     update(elapsed: number): void {

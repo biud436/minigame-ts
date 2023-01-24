@@ -4,6 +4,7 @@ import { GameErrorState } from "./game-error-state";
 import { GameObject } from "./game-object";
 import { IGameState } from "./game-state";
 import { GameText } from "./game-text";
+import { Input } from "./input";
 import { Sprite } from "./sprite";
 
 export class MapState implements IGameState {
@@ -16,6 +17,14 @@ export class MapState implements IGameState {
 
             if (object instanceof Sprite) {
                 object.setAngle(object.getAngle() + 1);
+            }
+
+            if (object instanceof GameText) {
+                object.setText(
+                    `마우스 X 좌표 : ${Input.getInstance()
+                        .getMouseX()
+                        .toString()}`
+                );
             }
         }
     }
