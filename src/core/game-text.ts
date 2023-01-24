@@ -35,7 +35,7 @@ export class GameText extends GameObject {
             this.position.y = 50;
         }
 
-        if (Input.getInstance().isKeyPress("Shift")) {
+        if (Input.getInstance().isKeyDown("Shift")) {
             Sound.getInstance().playOnce("/assets/wind.ogg");
         }
     }
