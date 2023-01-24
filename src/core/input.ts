@@ -3,6 +3,7 @@ import { Vector2D } from "./vector-2d";
 export class Input {
     private static INSTANCE: Input;
     private keyMap: Map<string, boolean> = new Map();
+    private keyPrevMap: Map<string, boolean> = new Map();
     private mouseDownMap: Map<number, boolean> = new Map();
     private mouse: Vector2D = new Vector2D(0, 0);
 
@@ -24,6 +25,10 @@ export class Input {
         document.removeEventListener("mousedown", this.onMouseDown.bind(this));
         document.removeEventListener("mouseup", this.onMouseUp.bind(this));
         document.removeEventListener("mousemove", this.onMouseMove.bind(this));
+    }
+
+    update(): void {
+        this.keyPrevMap = new Map(this.keyMap);
     }
 
     onKeyDown(e: KeyboardEvent) {

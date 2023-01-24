@@ -101,7 +101,9 @@ export class App {
         );
     }
 
-    dispose() {}
+    dispose() {
+        Input.getInstance().removeEventHandlers();
+    }
 }
 
 const errorBoundary = new ErrorBoundary(App.getInstance());

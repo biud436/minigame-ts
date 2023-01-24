@@ -5,6 +5,7 @@ import { GameObject } from "./game-object";
 import { IGameState } from "./game-state";
 import { GameText } from "./game-text";
 import { Input } from "./input";
+import { Sound } from "./sound";
 import { Sprite } from "./sprite";
 
 export class MapState implements IGameState {
@@ -26,6 +27,10 @@ export class MapState implements IGameState {
                         .toString()}`
                 );
             }
+        }
+
+        if (Input.getInstance().isKeyDown("Shift")) {
+            Sound.getInstance().playOnce("/assets/wind.ogg");
         }
     }
 
