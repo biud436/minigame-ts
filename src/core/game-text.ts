@@ -4,6 +4,9 @@ import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 import { Sound } from "./sound";
 
+const WINDOW_WIDTH = 800;
+const WINDOW_HEIGHT = 600;
+
 export class GameText extends GameObject {
     private text: string;
     private color: string;
@@ -21,6 +24,16 @@ export class GameText extends GameObject {
         this.font = font;
         this.matrix = new Matrix();
         this.position = { x: 0, y: 0 };
+
+        this.initWithPosition();
+    }
+
+    initWithPosition() {
+        const width = WINDOW_WIDTH;
+        const height = WINDOW_HEIGHT;
+
+        this.position.x = width / 2;
+        this.position.y = height / 2;
     }
 
     updatePosition(elapsed: number) {
@@ -28,8 +41,11 @@ export class GameText extends GameObject {
             this.position.x = this.position.x - 10;
         } else if (Input.getInstance().isKeyPress("ArrowRight")) {
             this.position.x = this.position.x + 10;
+        } else if (Input.getInstance().isKeyPress("ArrowDown")) {
+            this.position.y = this.position.y + 10;
+        } else if (Input.getInstance().isKeyPress("ArrowUp")) {
+            this.position.y = this.position.y - 10;
         }
-        this.position.y = this.position.y + 2;
 
         if (this.position.y > 500) {
             this.position.y = 50;
