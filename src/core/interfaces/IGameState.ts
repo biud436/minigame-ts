@@ -1,4 +1,4 @@
-import { GameObject } from "./game-object";
+import { GameObject } from "./GameObject";
 
 export interface IGameState {
     update(elapsed: number): void;

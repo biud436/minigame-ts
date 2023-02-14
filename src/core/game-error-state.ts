@@ -1,5 +1,5 @@
-import { GameObject } from "./game-object";
-import { IGameState } from "./game-state";
+import { GameObject } from "./interfaces/GameObject";
+import { IGameState } from "./interfaces/IGameState";
 import { GameText } from "./game-text";
 
 export class GameErrorState implements IGameState {

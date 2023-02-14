@@ -1,0 +1,5 @@
+version: "1"
+core:
+    width: 800
+    height: 600
+    fullscreen: false

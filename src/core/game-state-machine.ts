@@ -1,15 +1,5 @@
-import { IGameState } from "./game-state";
-
-export abstract class IGameStateMachine {
-    abstract pushState(newState: IGameState): void;
-    abstract changeState(newState: IGameState): void;
-    abstract popState(): void;
-    abstract update(elapsed: number): void;
-    abstract render(ctx: CanvasRenderingContext2D): void;
-    abstract current(): IGameState;
-
-    gameStates: IGameState[] = [];
-}
+import { IGameState } from "./interfaces/IGameState";
+import { IGameStateMachine } from "./interfaces/IGameStateMachine";
 
 export class GameStateMachine extends IGameStateMachine {
     pushState(newState: IGameState): void {

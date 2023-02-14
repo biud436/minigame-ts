@@ -1,12 +1,13 @@
 import { App } from "../main";
 import { TextureManager } from "../manager/texture-manager";
 import { GameErrorState } from "./game-error-state";
-import { GameObject } from "./game-object";
-import { IGameState } from "./game-state";
+import { GameObject } from "./interfaces/GameObject";
+import { IGameState } from "./interfaces/IGameState";
 import { GameText } from "./game-text";
 import { Input } from "./input";
 import { Sound } from "./sound";
 import { Sprite } from "./sprite";
+import loadYaml from "./yaml-loader";
 
 export class MapState implements IGameState {
     public static readonly ID = "MAP";

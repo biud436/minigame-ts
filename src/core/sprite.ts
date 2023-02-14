@@ -1,5 +1,5 @@
 import { TextureManager } from "../manager/texture-manager";
-import { GameObject } from "./game-object";
+import { GameObject } from "./interfaces/GameObject";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 import { SpriteData } from "./sprite-data";

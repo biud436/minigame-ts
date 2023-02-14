@@ -1,6 +1,6 @@
 import { Colors } from "./core/colors";
 import { ErrorBoundary } from "./core/error";
-import { DEFAULT_ERROR_MESSAGE } from "./core/errors";
+import { Errors } from "./core/errors";
 import { GameCanvas } from "./core/game-canvas";
 import { GameErrorState } from "./core/game-error-state";
 import { GameStateMachine } from "./core/game-state-machine";
@@ -100,7 +100,9 @@ export class App {
     catchError(e: any) {
         const fsm = this.getFSM();
         fsm.pushState(
-            new GameErrorState(e.message ? e.message : DEFAULT_ERROR_MESSAGE)
+            new GameErrorState(
+                e.message ? e.message : Errors.DEFAULT_ERROR_MESSAGE
+            )
         );
     }
 
