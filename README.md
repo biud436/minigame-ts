@@ -29,7 +29,7 @@ cd client
 yarn dev
 ```
 
-## Build
+### Build
 
 ```sh
 yarn workspace client build
