@@ -52,8 +52,6 @@ export class PlanetEarth extends GameObject {
                     this.angle = data.angle;
                 }
             );
-
-            SocketCore.getInstance().onEvent("packet", (data: any) => {});
         } catch (e: any) {
             console.warn(e);
         }
