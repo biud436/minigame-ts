@@ -17,11 +17,11 @@ yarn install
 next you can run the following command to start the development server:
 
 ```sh
-yarn dev
+yarn workspace client dev
 ```
 
 ## Build
 
 ```sh
-yarn build
+yarn workspace client build
 ```

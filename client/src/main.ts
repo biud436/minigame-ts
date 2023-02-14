@@ -5,7 +5,6 @@ import { Errors } from "./core/errors";
 import { GameCanvas } from "./core/game-canvas";
 import { GameErrorState } from "./core/game-error-state";
 import { GameStateMachine } from "./core/game-state-machine";
-import { GameText } from "./core/game-text";
 import { Input } from "./core/input";
 import { GameContext, Nullable } from "./core/interfaces/CoreContext";
 import { MapState } from "./core/map-state";
