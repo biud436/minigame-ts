@@ -1,10 +1,14 @@
 import { io, Socket } from "socket.io-client";
 import { ConfigService } from "../core/config-service";
+import { GameObject } from "../core/interfaces/GameObject";
 import { App } from "../main";
+
+export type TickCallback = (data: any) => void;
 
 export class SocketCore {
     protected socket?: Socket;
     private static INSTANCE: SocketCore;
+    private observers: Map<string, TickCallback> = new Map();
 
     constructor() {
         this.initialize();
@@ -22,6 +26,7 @@ export class SocketCore {
         this.initWithSocket();
         this.handleError();
         this.emitConntectEcho();
+        this.readPackets();
     }
 
     initWithSocket() {
@@ -47,5 +52,24 @@ export class SocketCore {
 
     sendEvent(event: string, data: any) {
         this.socket?.emit(event, data);
+    }
+
+    /**
+     * 받은 유닛 데이터를 각각의 게임 객체에 전달한다.
+     */
+    readPackets() {
+        this.socket?.on("packet", (data: any) => {
+            this.observers.forEach((observer, id) => {
+                observer(data[id]);
+            });
+        });
+    }
+
+    addObserver(id: string, callback: TickCallback) {
+        this.observers.set(id, callback);
+    }
+
+    removeObserver(id: string) {
+        this.observers.delete(id);
     }
 }

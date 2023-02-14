@@ -46,11 +46,11 @@ export class PlanetEarth extends GameObject {
             this.mainSprite.setScale(1.0);
             this.mainSprite.setRect(this.padding);
 
-            SocketCore.getInstance().onEvent("packet", (data: any) => {
+            SocketCore.getInstance().addObserver("planetEarth", (data: any) => {
                 this.angle = +data.angle;
-
-                console.log(data);
             });
+
+            SocketCore.getInstance().onEvent("packet", (data: any) => {});
         } catch (e: any) {
             console.warn(e);
         }

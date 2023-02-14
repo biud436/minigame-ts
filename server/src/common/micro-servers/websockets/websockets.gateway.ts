@@ -38,9 +38,11 @@ export class WebsocketsGateway
         this.intervalId = setInterval(() => {
             this.planetEarth.updateAngle();
             this.server.emit('packet', {
-                x: this.planetEarth.x,
-                y: this.planetEarth.y,
-                angle: this.planetEarth.angle,
+                planetEarth: {
+                    x: this.planetEarth.x,
+                    y: this.planetEarth.y,
+                    angle: this.planetEarth.angle,
+                },
             });
         }, this.TICK);
     }
