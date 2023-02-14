@@ -29,6 +29,7 @@
     "@nestjs/websockets": "9.1.6",
     "@socket.io/redis-adapter": "^8.1.0",
     "@types/redis": "^4.0.11",
+    "eslint-plugin-prettier": "^4.2.1",
     "redis": "^4.6.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
