@@ -4,6 +4,16 @@ import { GameObject } from "../core/interfaces/GameObject";
 import { App } from "../main";
 
 export type TickCallback = (data: any) => void;
+export type Packet = {
+    x: number;
+    y: number;
+    angle: number;
+};
+export type PacketData = {
+    planetEarth: Packet;
+
+    [key: string]: Packet;
+};
 
 export class SocketCore {
     protected socket?: Socket;
@@ -58,7 +68,7 @@ export class SocketCore {
      * 받은 유닛 데이터를 각각의 게임 객체에 전달한다.
      */
     readPackets() {
-        this.socket?.on("packet", (data: any) => {
+        this.socket?.on("packet", (data: PacketData) => {
             this.observers.forEach((observer, id) => {
                 observer(data[id]);
             });

@@ -3,7 +3,7 @@ import { GameObject } from "../core/interfaces/GameObject";
 import { Rect } from "../core/rect";
 import { Sprite } from "../core/sprite";
 import { TextureManager } from "../manager/texture-manager";
-import { SocketCore } from "../net/socket-core";
+import { Packet, SocketCore } from "../net/socket-core";
 
 /**
  * @description
@@ -46,9 +46,12 @@ export class PlanetEarth extends GameObject {
             this.mainSprite.setScale(1.0);
             this.mainSprite.setRect(this.padding);
 
-            SocketCore.getInstance().addObserver("planetEarth", (data: any) => {
-                this.angle = +data.angle;
-            });
+            SocketCore.getInstance().addObserver(
+                "planetEarth",
+                (data: Packet) => {
+                    this.angle = data.angle;
+                }
+            );
 
             SocketCore.getInstance().onEvent("packet", (data: any) => {});
         } catch (e: any) {
