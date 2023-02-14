@@ -4,6 +4,8 @@ This is a simple game engine written in TypeScript.
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/13586185/218744889-f51e1059-8972-438a-a8f1-4b2b748a5737.gif" width="400" />
+<img src="https://user-images.githubusercontent.com/13586185/218754079-01db958b-aaa3-410f-904d-dffabd4e0954.gif" width="400" />
+
 </p>
 
 ## Structure
