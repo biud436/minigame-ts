@@ -1,4 +1,5 @@
 import { Colors } from "./core/colors";
+import { ConfigService } from "./core/config-service";
 import { ErrorBoundary } from "./core/error";
 import { Errors } from "./core/errors";
 import { GameCanvas } from "./core/game-canvas";
@@ -6,6 +7,7 @@ import { GameErrorState } from "./core/game-error-state";
 import { GameStateMachine } from "./core/game-state-machine";
 import { GameText } from "./core/game-text";
 import { Input } from "./core/input";
+import { GameContext, Nullable } from "./core/interfaces/CoreContext";
 import { MapState } from "./core/map-state";
 
 export type MiniGameBootstrapApplication = HTMLDivElement | null;
@@ -13,7 +15,7 @@ export type MiniGameBootstrapApplication = HTMLDivElement | null;
 export class App {
     private application!: MiniGameBootstrapApplication;
     private gameCanvas?: GameCanvas;
-    public gameContext: CanvasRenderingContext2D | null = null;
+    public gameContext: Nullable<GameContext> = null;
     private stateMachine: GameStateMachine = new GameStateMachine();
 
     private lastElapsed: number = 0;
@@ -43,7 +45,10 @@ export class App {
     initWithCanvas(): void {
         const application = document.querySelector<HTMLDivElement>("#app");
         if (!application) return;
-        this.gameCanvas = new GameCanvas(800, 600);
+        this.gameCanvas = new GameCanvas(
+            ConfigService.getInstance().width,
+            ConfigService.getInstance().height
+        );
         this.gameContext = this.gameCanvas.context;
 
         application.appendChild(this.gameCanvas.element);
@@ -62,7 +67,12 @@ export class App {
         if (!context) return;
 
         context.fillStyle = Colors.BLACK;
-        context.fillRect(0, 0, 800, 600);
+        context.fillRect(
+            0,
+            0,
+            ConfigService.getInstance().width,
+            ConfigService.getInstance().height
+        );
 
         return this;
     }
@@ -73,7 +83,7 @@ export class App {
         this.stateMachine.render(context);
     }
 
-    getContext(): CanvasRenderingContext2D | null {
+    getContext(): Nullable<GameContext> {
         return this.gameCanvas ? this.gameContext : null;
     }
 

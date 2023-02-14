@@ -11,6 +11,7 @@ interface IManifest {
 export class ConfigService {
     private static INSTANCE: ConfigService;
     private data?: IManifest;
+    private done: boolean = false;
 
     private constructor() {}
 
@@ -23,6 +24,7 @@ export class ConfigService {
                 height: data.core.height,
             },
         };
+        this.done = true;
     }
 
     public static getInstance(): ConfigService {
@@ -31,5 +33,13 @@ export class ConfigService {
         }
 
         return ConfigService.INSTANCE;
+    }
+
+    get width() {
+        return this.data?.core.width ?? 800;
+    }
+
+    get height() {
+        return this.data?.core.height ?? 600;
     }
 }
