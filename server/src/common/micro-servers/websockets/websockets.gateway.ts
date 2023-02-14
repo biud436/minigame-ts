@@ -11,6 +11,7 @@ import {
     WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { PlanetEarth } from './dto/planet-earth';
 interface IMessage {
     message: string;
 }
@@ -20,6 +21,7 @@ export class WebsocketsGateway
     implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
     private logger: Logger = new Logger(WebsocketsGateway.name);
+    private planetEarth: PlanetEarth = new PlanetEarth();
 
     @WebSocketServer()
     server: Server;
@@ -58,6 +60,12 @@ export class WebsocketsGateway
             JSON.stringify({ message: data.message }),
         );
     }
+
+    // @SubscribeMessage('tick')
+    // async onTick(@ConnectedSocket() client: Socket) {
+    //     this.planetEarth.updateAngle();
+    //     client.broadcast.emit('tick', JSON.stringify(this.planetEarth));
+    // }
 
     @SubscribeMessage('pos:planet-earth')
     async onPosPlanetEarth(
