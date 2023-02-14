@@ -2,11 +2,7 @@ import { GameContext } from "../core/interfaces/CoreContext";
 import { Matrix } from "../core/matrix";
 import { Rect } from "../core/rect";
 import { Texture2D } from "../core/texture-2d";
-
-export interface ITextureManager {
-    load(filename: string, id: string): Promise<boolean>;
-    remove(id: string): boolean;
-}
+import { ITextureManager } from "../core/interfaces/ITextureManager";
 
 export class TextureManager implements ITextureManager {
     private textureMap: Map<string, Texture2D> = new Map();
