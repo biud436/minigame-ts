@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Logger } from '@nestjs/common';
+import { Logger, OnModuleDestroy } from '@nestjs/common';
 import {
     ConnectedSocket,
     MessageBody,
@@ -18,24 +18,45 @@ interface IMessage {
 
 @WebSocketGateway({ cors: true })
 export class WebsocketsGateway
-    implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+    implements
+        OnGatewayInit,
+        OnGatewayConnection,
+        OnGatewayDisconnect,
+        OnModuleDestroy
 {
     private logger: Logger = new Logger(WebsocketsGateway.name);
     private planetEarth: PlanetEarth = new PlanetEarth();
+    private intervalId: NodeJS.Timer;
+
+    private clients: Socket[] = [];
 
     @WebSocketServer()
     server: Server;
 
     afterInit(server: Server) {
-        //
+        this.intervalId = setInterval(() => {
+            this.planetEarth.updateAngle();
+            this.server.emit('packet', {
+                x: this.planetEarth.x,
+                y: this.planetEarth.y,
+                angle: this.planetEarth.angle,
+            });
+        }, 1000 / 60);
+    }
+
+    onModuleDestroy() {
+        clearInterval(this.intervalId);
     }
 
     handleConnection(@ConnectedSocket() client: Socket, ...args: any[]) {
         this.logger.log('connect ' + client.id);
+
+        this.clients.push(client);
     }
 
     handleDisconnect(@ConnectedSocket() client: Socket) {
-        //
+        this.logger.log('disconnect ' + client.id);
+        this.clients = this.clients.filter((c) => c.id !== client.id);
     }
 
     /**

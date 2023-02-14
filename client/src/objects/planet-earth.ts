@@ -45,6 +45,12 @@ export class PlanetEarth extends GameObject {
 
             this.mainSprite.setScale(1.0);
             this.mainSprite.setRect(this.padding);
+
+            SocketCore.getInstance().onEvent("packet", (data: any) => {
+                this.angle = +data.angle;
+
+                console.log(data);
+            });
         } catch (e: any) {
             console.warn(e);
         }
@@ -55,26 +61,8 @@ export class PlanetEarth extends GameObject {
     }
 
     update(elapsed: number): void {
-        this.angle += 0.05;
-
-        if (this.angle > 360) {
-            this.angle -= 360;
-        }
-
         this.mainSprite?.setAngle(this.angle);
         this.mainSprite?.update(elapsed);
-
-        if (performance.now() - this.lastTime > this.TIMER) {
-            // 서버에 이벤트를 전송한다 (서버 터질 것 같은데?)
-            SocketCore.getInstance().sendEvent("pos:planet-earth", {
-                id: this.mainSprite?.getSpriteData()?.id,
-                angle: this.angle,
-                x: this.mainSprite?.getX(),
-                y: this.mainSprite?.getY(),
-            });
-
-            this.lastTime = performance.now();
-        }
     }
 
     destroy(): void {

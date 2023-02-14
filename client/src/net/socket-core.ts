@@ -41,6 +41,10 @@ export class SocketCore {
         this.socket?.emit("connectEcho");
     }
 
+    onEvent(event: string, callback: any) {
+        this.socket?.on(event, callback);
+    }
+
     sendEvent(event: string, data: any) {
         this.socket?.emit(event, data);
     }

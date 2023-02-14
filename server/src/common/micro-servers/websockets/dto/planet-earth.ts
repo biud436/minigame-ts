@@ -1,7 +1,10 @@
 export class PlanetEarth {
-    private x: number;
-    private y: number;
-    private angle: number;
+    /**
+     * 캡슐화를 하지 않음 (은닉화 X)
+     */
+    public x: number;
+    public y: number;
+    public angle: number;
 
     constructor() {
         this.x = 0;
