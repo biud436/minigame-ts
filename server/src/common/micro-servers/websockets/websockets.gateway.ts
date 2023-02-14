@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Logger } from '@nestjs/common';
 import {
     ConnectedSocket,
     MessageBody,
@@ -18,6 +19,8 @@ interface IMessage {
 export class WebsocketsGateway
     implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
+    private logger: Logger = new Logger(WebsocketsGateway.name);
+
     @WebSocketServer()
     server: Server;
 
@@ -26,7 +29,7 @@ export class WebsocketsGateway
     }
 
     handleConnection(@ConnectedSocket() client: Socket, ...args: any[]) {
-        console.log('connect ' + client.id);
+        this.logger.log('connect ' + client.id);
     }
 
     handleDisconnect(@ConnectedSocket() client: Socket) {
@@ -36,7 +39,7 @@ export class WebsocketsGateway
     /**
      * 서버와 클라이언트 소켓의 연결이 발생하면 호출되는 이벤트입니다.
      * 자신을 제외한 모든 클라이언트에게 메시지 전송
-     * @param client
+     * @param {Socket} client
      */
     @SubscribeMessage('connectEcho')
     async connect(@ConnectedSocket() client: Socket) {
