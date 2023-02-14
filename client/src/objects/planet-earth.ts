@@ -11,6 +11,7 @@ import { TextureManager } from "../manager/texture-manager";
 export class PlanetEarth extends GameObject {
     private mainSprite?: Sprite;
     private angle: number;
+    private padding: Rect = new Rect(-320, -320, 0, 0);
 
     constructor() {
         super();
@@ -39,7 +40,7 @@ export class PlanetEarth extends GameObject {
             }
 
             this.mainSprite.setScale(1.0);
-            this.mainSprite.setRect(new Rect(-320, -320, 0, 0));
+            this.mainSprite.setRect(this.padding);
         } catch (e: any) {
             console.warn(e);
         }
