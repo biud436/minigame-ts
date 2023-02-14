@@ -3,7 +3,6 @@ import { ConfigService } from "../core/config-service";
 import { GameObject } from "../core/interfaces/GameObject";
 import { App } from "../main";
 
-export type TickCallback = (data: any) => void;
 export type Packet = {
     x: number;
     y: number;
@@ -14,6 +13,7 @@ export type PacketData = {
 
     [key: string]: Packet;
 };
+export type TickCallback = (data: Packet) => void;
 
 export class SocketCore {
     protected socket?: Socket;
