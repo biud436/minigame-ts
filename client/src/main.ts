@@ -8,6 +8,7 @@ import { GameStateMachine } from "./core/game-state-machine";
 import { Input } from "./core/input";
 import { GameContext, Nullable } from "./core/interfaces/CoreContext";
 import { MapState } from "./core/map-state";
+import { SocketCore } from "./net/socket-core";
 
 export type MiniGameBootstrapApplication = HTMLDivElement | null;
 
@@ -16,6 +17,7 @@ export class App {
     private gameCanvas?: GameCanvas;
     public gameContext: Nullable<GameContext> = null;
     private stateMachine: GameStateMachine = new GameStateMachine();
+    private socketCore: SocketCore = new SocketCore();
 
     private lastElapsed: number = 0;
     private animationProviderId: number = 0;

@@ -5,6 +5,8 @@ interface IManifest {
     core: {
         width: number;
         height: number;
+        fullscreen: boolean;
+        baseServerUrl: string;
     };
 }
 
@@ -22,6 +24,8 @@ export class ConfigService {
             core: {
                 width: data.core.width,
                 height: data.core.height,
+                fullscreen: data.core.fullscreen,
+                baseServerUrl: data.core.baseServerUrl,
             },
         };
         this.done = true;
@@ -41,5 +45,9 @@ export class ConfigService {
 
     get height() {
         return this.data?.core.height ?? 600;
+    }
+
+    get baseServerUrl() {
+        return this.data?.core.baseServerUrl ?? "http://localhost:3000";
     }
 }

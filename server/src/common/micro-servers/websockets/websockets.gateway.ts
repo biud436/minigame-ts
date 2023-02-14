@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
     ConnectedSocket,
+    MessageBody,
     OnGatewayConnection,
     OnGatewayDisconnect,
     OnGatewayInit,
@@ -9,8 +10,11 @@ import {
     WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+interface IMessage {
+    message: string;
+}
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class WebsocketsGateway
     implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -34,13 +38,21 @@ export class WebsocketsGateway
      * 자신을 제외한 모든 클라이언트에게 메시지 전송
      * @param client
      */
-    @SubscribeMessage('connect')
+    @SubscribeMessage('connectEcho')
     async connect(@ConnectedSocket() client: Socket) {
+        console.log('hello');
+        client.broadcast.emit('newMember', JSON.stringify({}));
+    }
+
+    @SubscribeMessage('message')
+    async onMessage(
+        @MessageBody() data: IMessage,
+        @ConnectedSocket() client: Socket,
+    ) {
+        // 자신을 제외한 모든 클라이언트에 전송하기
         client.broadcast.emit(
-            'newMember',
-            JSON.stringify({
-                id: client.id,
-            }),
+            'message',
+            JSON.stringify({ message: data.message }),
         );
     }
 }

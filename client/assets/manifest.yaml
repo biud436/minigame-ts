@@ -3,3 +3,4 @@ core:
     width: 800
     height: 600
     fullscreen: false
+    baseServerUrl: "http://localhost:3000"
