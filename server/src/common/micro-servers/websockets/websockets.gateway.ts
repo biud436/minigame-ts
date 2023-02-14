@@ -43,7 +43,7 @@ export class WebsocketsGateway
      */
     @SubscribeMessage('connectEcho')
     async connect(@ConnectedSocket() client: Socket) {
-        console.log('hello');
+        // console.log('hello');
         client.broadcast.emit('newMember', JSON.stringify({}));
     }
 
@@ -57,5 +57,14 @@ export class WebsocketsGateway
             'message',
             JSON.stringify({ message: data.message }),
         );
+    }
+
+    @SubscribeMessage('pos:planet-earth')
+    async onPosPlanetEarth(
+        @MessageBody() data: any,
+        @ConnectedSocket() client: Socket,
+    ) {
+        this.logger.debug('pos:planet-earth ' + JSON.stringify(data));
+        client.broadcast.emit('pos:planet-earth', JSON.stringify(data));
     }
 }

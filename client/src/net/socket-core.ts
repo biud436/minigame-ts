@@ -4,9 +4,18 @@ import { App } from "../main";
 
 export class SocketCore {
     protected socket?: Socket;
+    private static INSTANCE: SocketCore;
 
     constructor() {
         this.initialize();
+    }
+
+    public static getInstance() {
+        if (!SocketCore.INSTANCE) {
+            SocketCore.INSTANCE = new SocketCore();
+        }
+
+        return SocketCore.INSTANCE;
     }
 
     initialize() {
@@ -30,5 +39,9 @@ export class SocketCore {
 
     emitConntectEcho() {
         this.socket?.emit("connectEcho");
+    }
+
+    sendEvent(event: string, data: any) {
+        this.socket?.emit(event, data);
     }
 }

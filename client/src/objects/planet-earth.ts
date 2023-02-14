@@ -3,6 +3,7 @@ import { GameObject } from "../core/interfaces/GameObject";
 import { Rect } from "../core/rect";
 import { Sprite } from "../core/sprite";
 import { TextureManager } from "../manager/texture-manager";
+import { SocketCore } from "../net/socket-core";
 
 /**
  * @description
@@ -12,11 +13,14 @@ export class PlanetEarth extends GameObject {
     private mainSprite?: Sprite;
     private angle: number;
     private padding: Rect = new Rect(-320, -320, 0, 0);
+    private lastTime: number = 0;
+    private TIMER: number = 500;
 
     constructor() {
         super();
 
         this.angle = 0;
+        this.lastTime = performance.now();
         this.initialize();
     }
 
@@ -58,8 +62,19 @@ export class PlanetEarth extends GameObject {
         }
 
         this.mainSprite?.setAngle(this.angle);
-
         this.mainSprite?.update(elapsed);
+
+        if (performance.now() - this.lastTime > this.TIMER) {
+            // 서버에 이벤트를 전송한다 (서버 터질 것 같은데?)
+            SocketCore.getInstance().sendEvent("pos:planet-earth", {
+                id: this.mainSprite?.getSpriteData()?.id,
+                angle: this.angle,
+                x: this.mainSprite?.getX(),
+                y: this.mainSprite?.getY(),
+            });
+
+            this.lastTime = performance.now();
+        }
     }
 
     destroy(): void {
