@@ -134,7 +134,7 @@ export class Sprite extends GameObject implements ISprite {
     }
 
     getSpriteData(): SpriteData {
-        return new SpriteData();
+        return this.spriteData;
     }
 
     getX(): number {
@@ -195,6 +195,10 @@ export class Sprite extends GameObject implements ISprite {
 
     getAnimComplete(): boolean {
         return this.isAnimComplete;
+    }
+
+    setSpriteData(spriteData: SpriteData): void {
+        this.spriteData = spriteData;
     }
 
     setX(x: number): Sprite {

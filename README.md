@@ -2,6 +2,10 @@
 
 This is a simple game engine written in TypeScript.
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/13586185/218744889-f51e1059-8972-438a-a8f1-4b2b748a5737.gif" width="400" />
+</p>
+
 ## Structure
 
 App (Main Entry Point) -> Finite State Machine -> Render Clear -> Update States -> Update Game Objects -> Render States -> Render Game Objects

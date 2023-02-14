@@ -7,7 +7,7 @@ import { GameErrorState } from "./core/game-error-state";
 import { GameStateMachine } from "./core/game-state-machine";
 import { Input } from "./core/input";
 import { GameContext, Nullable } from "./core/interfaces/CoreContext";
-import { MapState } from "./core/map-state";
+import { MapState } from "./states/map-state";
 import { SocketCore } from "./net/socket-core";
 
 export type MiniGameBootstrapApplication = HTMLDivElement | null;
@@ -98,7 +98,7 @@ export class App {
         if (this.lastElapsed === 0) {
             this.lastElapsed = elapsed;
         }
-        this.stateMachine.update(elapsed - this.lastElapsed);
+        this.stateMachine.update((elapsed - this.lastElapsed) / 1000);
 
         this.render();
         Input.getInstance().update();

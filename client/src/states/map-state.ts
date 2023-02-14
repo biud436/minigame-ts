@@ -1,14 +1,15 @@
 import { App } from "../main";
 import { TextureManager } from "../manager/texture-manager";
-import { GameErrorState } from "./game-error-state";
-import { GameObject } from "./interfaces/GameObject";
-import { IGameState } from "./interfaces/IGameState";
-import { GameText } from "./game-text";
-import { Input } from "./input";
-import { Sound } from "./sound";
-import { Sprite } from "./sprite";
-import loadYaml from "./yaml-loader";
-import { GameContext } from "./interfaces/CoreContext";
+import { GameErrorState } from "../core/game-error-state";
+import { GameObject } from "../core/interfaces/GameObject";
+import { IGameState } from "../core/interfaces/IGameState";
+import { GameText } from "../core/game-text";
+import { Input } from "../core/input";
+import { Sound } from "../core/sound";
+import { Sprite } from "../core/sprite";
+import loadYaml from "../core/yaml-loader";
+import { GameContext } from "../core/interfaces/CoreContext";
+import { PlanetEarth } from "../objects/planet-earth";
 
 export class MapState implements IGameState {
     public static readonly ID = "MAP";
@@ -23,11 +24,7 @@ export class MapState implements IGameState {
             }
 
             if (object instanceof GameText) {
-                object.setText(
-                    `마우스 X 좌표 : ${Input.getInstance()
-                        .getMouseX()
-                        .toString()}`
-                );
+                object.setText(`${Input.getInstance().getMouseX().toString()}`);
             }
         }
     }
@@ -51,7 +48,7 @@ export class MapState implements IGameState {
                     console.log("success");
                 }
 
-                tile.setX(100).setY(400).setOpacity(128).setAngle(45);
+                tile.setX(200).setY(400).setOpacity(128).setAngle(45);
 
                 this.gameObjects.push(tile);
             })
@@ -62,6 +59,8 @@ export class MapState implements IGameState {
                         new GameErrorState("텍스쳐 tile1을 찾지 못했습니다.")
                     );
             });
+
+        this.gameObjects.push(new PlanetEarth());
 
         return true;
     }

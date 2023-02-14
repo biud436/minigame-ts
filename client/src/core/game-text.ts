@@ -34,8 +34,8 @@ export class GameText extends GameObject {
         const width = WINDOW_WIDTH;
         const height = WINDOW_HEIGHT;
 
-        this.position.x = width / 2;
-        this.position.y = height / 2;
+        this.position.x = 10;
+        this.position.y = 40;
     }
 
     updatePosition(elapsed: number) {
