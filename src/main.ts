@@ -1,4 +1,6 @@
+import { Colors } from "./core/colors";
 import { ErrorBoundary } from "./core/error";
+import { DEFAULT_ERROR_MESSAGE } from "./core/errors";
 import { GameCanvas } from "./core/game-canvas";
 import { GameErrorState } from "./core/game-error-state";
 import { GameStateMachine } from "./core/game-state-machine";
@@ -59,7 +61,7 @@ export class App {
         const { gameContext: context } = this;
         if (!context) return;
 
-        context.fillStyle = "black";
+        context.fillStyle = Colors.BLACK;
         context.fillRect(0, 0, 800, 600);
 
         return this;
@@ -98,7 +100,7 @@ export class App {
     catchError(e: any) {
         const fsm = this.getFSM();
         fsm.pushState(
-            new GameErrorState(e.message ? e.message : "오류가 발생하였습니다.")
+            new GameErrorState(e.message ? e.message : DEFAULT_ERROR_MESSAGE)
         );
     }
 

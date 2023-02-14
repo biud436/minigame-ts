@@ -1,5 +1,6 @@
 import { GameObject } from "./game-object";
 import { Input } from "./input";
+import { VK_DOWN, VK_LEFT, VK_RIGHT, VK_SHIFT, VK_UP } from "./keys";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 import { Sound } from "./sound";
@@ -37,13 +38,13 @@ export class GameText extends GameObject {
     }
 
     updatePosition(elapsed: number) {
-        if (Input.getInstance().isKeyPress("ArrowLeft")) {
+        if (Input.getInstance().isKeyPress(VK_LEFT)) {
             this.position.x = this.position.x - 10;
-        } else if (Input.getInstance().isKeyPress("ArrowRight")) {
+        } else if (Input.getInstance().isKeyPress(VK_RIGHT)) {
             this.position.x = this.position.x + 10;
-        } else if (Input.getInstance().isKeyPress("ArrowDown")) {
+        } else if (Input.getInstance().isKeyPress(VK_DOWN)) {
             this.position.y = this.position.y + 10;
-        } else if (Input.getInstance().isKeyPress("ArrowUp")) {
+        } else if (Input.getInstance().isKeyPress(VK_UP)) {
             this.position.y = this.position.y - 10;
         }
 
@@ -51,7 +52,7 @@ export class GameText extends GameObject {
             this.position.y = 50;
         }
 
-        if (Input.getInstance().isKeyDown("Shift")) {
+        if (Input.getInstance().isKeyDown(VK_SHIFT)) {
             Sound.getInstance().playOnce("/assets/wind.ogg");
         }
     }

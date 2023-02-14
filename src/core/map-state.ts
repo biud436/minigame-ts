@@ -57,7 +57,7 @@ export class MapState implements IGameState {
                 App.getInstance()
                     .getFSM()
                     .pushState(
-                        new GameErrorState(" 텍스쳐 tile1을 찾지 못했습니다.")
+                        new GameErrorState("텍스쳐 tile1을 찾지 못했습니다.")
                     );
             });
 
