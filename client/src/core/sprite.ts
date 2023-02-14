@@ -1,5 +1,7 @@
 import { TextureManager } from "../manager/texture-manager";
+import { GameContext } from "./interfaces/CoreContext";
 import { GameObject } from "./interfaces/GameObject";
+import { ISprite } from "./interfaces/ISprite";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 import { SpriteData } from "./sprite-data";
@@ -9,20 +11,6 @@ export const SPRITE_SHEET_ROWS = 4;
 export const PI_2 = Math.PI * 2;
 export const DEG_TO_RAD = Math.PI / 180;
 export const RAD_TO_DEG = 180 / Math.PI;
-
-export interface ISprite extends GameObject {
-    initialize(
-        x: number,
-        y: number,
-        width: number,
-        height: number,
-        maxFrames: number,
-        textuereId: string
-    ): boolean;
-    update(elapsed: number): void;
-
-    getSpriteData(): SpriteData;
-}
 
 export class Sprite extends GameObject implements ISprite {
     private spriteData: SpriteData;
@@ -127,7 +115,7 @@ export class Sprite extends GameObject implements ISprite {
         this.updateTransform();
     }
 
-    draw(ctx: CanvasRenderingContext2D): void {
+    draw(ctx: GameContext): void {
         if (!this.isInitialized) {
             return;
         }

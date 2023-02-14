@@ -1,6 +1,7 @@
 import { GameObject } from "./interfaces/GameObject";
 import { IGameState } from "./interfaces/IGameState";
 import { GameText } from "./game-text";
+import { GameContext } from "./interfaces/CoreContext";
 
 export class GameErrorState implements IGameState {
     static readonly ID = "ERROR";
@@ -17,7 +18,7 @@ export class GameErrorState implements IGameState {
         //
     }
 
-    render(ctx: CanvasRenderingContext2D): void {
+    render(ctx: GameContext): void {
         ctx.fillStyle = "black";
         ctx.fillRect(
             0,

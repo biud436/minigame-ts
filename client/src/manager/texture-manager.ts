@@ -1,3 +1,4 @@
+import { GameContext } from "../core/interfaces/CoreContext";
 import { Matrix } from "../core/matrix";
 import { Rect } from "../core/rect";
 import { Texture2D } from "../core/texture-2d";
@@ -84,7 +85,7 @@ export class TextureManager implements ITextureManager {
     }
 
     renderFrame(
-        ctx: CanvasRenderingContext2D,
+        ctx: GameContext,
         textureId: string,
         x: number,
         y: number,
@@ -124,7 +125,7 @@ export class TextureManager implements ITextureManager {
         ctx.restore();
     }
 
-    setWorldTransform(ctx: CanvasRenderingContext2D, transform: Matrix): void {
+    setWorldTransform(ctx: GameContext, transform: Matrix): void {
         ctx.setTransform(transform.toTransformData());
     }
 }
