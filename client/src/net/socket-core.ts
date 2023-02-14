@@ -69,8 +69,8 @@ export class SocketCore {
      */
     readPackets() {
         this.socket?.on("packet", (data: PacketData) => {
-            this.observers.forEach((observer, id) => {
-                observer(data[id]);
+            this.observers.forEach((syncFunction, id) => {
+                syncFunction(data[id]);
             });
         });
     }
