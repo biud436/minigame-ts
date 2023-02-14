@@ -27,6 +27,7 @@ export class WebsocketsGateway
     private logger: Logger = new Logger(WebsocketsGateway.name);
     private planetEarth: PlanetEarth = new PlanetEarth();
     private intervalId: NodeJS.Timer;
+    private TICK: number = 1000 / 60;
 
     private clients: Socket[] = [];
 
@@ -41,7 +42,7 @@ export class WebsocketsGateway
                 y: this.planetEarth.y,
                 angle: this.planetEarth.angle,
             });
-        }, 1000 / 60);
+        }, this.TICK);
     }
 
     onModuleDestroy() {
