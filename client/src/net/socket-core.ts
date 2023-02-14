@@ -3,7 +3,6 @@ import { ConfigService } from "../core/config-service";
 
 export class SocketCore {
     protected socket?: Socket;
-    public static host = "http://localhost:3000";
 
     constructor() {
         this.init();
