@@ -1,3 +1,4 @@
+import { GameContext } from "./interfaces/CoreContext";
 import { IGameState } from "./interfaces/IGameState";
 import { IGameStateMachine } from "./interfaces/IGameStateMachine";
 
@@ -38,7 +39,7 @@ export class GameStateMachine extends IGameStateMachine {
         this.gameStates[this.gameStates.length - 1]?.update(elapsed);
     }
 
-    render(ctx: CanvasRenderingContext2D): void {
+    render(ctx: GameContext): void {
         this.gameStates[this.gameStates.length - 1]?.render(ctx);
     }
 

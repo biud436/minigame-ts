@@ -8,6 +8,7 @@ import { Input } from "./input";
 import { Sound } from "./sound";
 import { Sprite } from "./sprite";
 import loadYaml from "./yaml-loader";
+import { GameContext } from "./interfaces/CoreContext";
 
 export class MapState implements IGameState {
     public static readonly ID = "MAP";
@@ -31,7 +32,7 @@ export class MapState implements IGameState {
         }
     }
 
-    render(ctx: CanvasRenderingContext2D): void {
+    render(ctx: GameContext): void {
         for (const object of this.gameObjects) {
             object.draw(ctx);
         }

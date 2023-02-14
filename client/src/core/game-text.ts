@@ -4,6 +4,7 @@ import { Keys } from "./keys";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 import { Sound } from "./sound";
+import { GameContext } from "./interfaces/CoreContext";
 
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;
@@ -73,7 +74,7 @@ export class GameText extends GameObject {
         this.updateTransform();
     }
 
-    draw(ctx: CanvasRenderingContext2D): void {
+    draw(ctx: GameContext): void {
         ctx.fillStyle = this.color;
         ctx.font = this.font;
 

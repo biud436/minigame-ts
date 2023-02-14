@@ -1,3 +1,4 @@
+import { GameContext } from "./CoreContext";
 import { IGameState } from "./IGameState";
 
 export abstract class IGameStateMachine {
@@ -5,7 +6,7 @@ export abstract class IGameStateMachine {
     abstract changeState(newState: IGameState): void;
     abstract popState(): void;
     abstract update(elapsed: number): void;
-    abstract render(ctx: CanvasRenderingContext2D): void;
+    abstract render(ctx: GameContext): void;
     abstract current(): IGameState;
 
     gameStates: IGameState[] = [];
