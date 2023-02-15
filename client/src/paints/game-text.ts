@@ -1,14 +1,20 @@
-import { GameObject } from "./interfaces/GameObject";
-import { Input } from "./input";
-import { Keys } from "./keys";
-import { Matrix } from "./matrix";
-import { Rect } from "./rect";
-import { Sound } from "./sound";
-import { GameContext } from "./interfaces/CoreContext";
+import { GameObject } from "../core/interfaces/GameObject";
+import { Input } from "../core/input";
+import { Keys } from "../core/keys";
+import { Matrix } from "../core/matrix";
+import { Rect } from "../core/rect";
+import { Sound } from "../core/sound";
+import { GameContext } from "../core/interfaces/CoreContext";
 
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;
 
+/**
+ * @class GameText
+ * @description
+ * 이 클래스는 텍스트를 화면에 그릴 수 있게 해줍니다.
+ * 다중 라인과 색상, 폰트를 지정할 수 있습니다.
+ */
 export class GameText extends GameObject {
     private text: string;
     private color: string;
@@ -104,9 +110,7 @@ export class GameText extends GameObject {
         }
     }
 
-    destroy(): void {
-        throw new Error("Method not implemented.");
-    }
+    destroy(): void {}
 
     getWidth(): number {
         return this.width;

@@ -1,6 +1,6 @@
 import { GameObject } from "./interfaces/GameObject";
 import { IGameState } from "./interfaces/IGameState";
-import { GameText } from "./game-text";
+import { GameText } from "../paints/game-text";
 import { GameContext } from "./interfaces/CoreContext";
 
 export class GameErrorState implements IGameState {

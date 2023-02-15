@@ -1,6 +1,6 @@
 import { App } from "../main";
 import { GameErrorState } from "./game-error-state";
-import { GameText } from "./game-text";
+import { GameText } from "../paints/game-text";
 
 /**
  * @class ErrorBoundary

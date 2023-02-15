@@ -3,7 +3,7 @@ import { TextureManager } from "../manager/texture-manager";
 import { GameErrorState } from "../core/game-error-state";
 import { GameObject } from "../core/interfaces/GameObject";
 import { IGameState } from "../core/interfaces/IGameState";
-import { GameText } from "../core/game-text";
+import { GameText } from "../paints/game-text";
 import { Input } from "../core/input";
 import { Sound } from "../core/sound";
 import { Sprite } from "../core/sprite";
