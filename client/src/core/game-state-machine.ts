@@ -1,6 +1,6 @@
-import { GameContext } from "./interfaces/CoreContext";
-import { IGameState } from "./interfaces/IGameState";
-import { IGameStateMachine } from "./interfaces/IGameStateMachine";
+import { GameContext } from "./interfaces/core-context";
+import { IGameState } from "./interfaces/game-state.interface";
+import { IGameStateMachine } from "./interfaces/game-state-machine.interface";
 
 export class GameStateMachine extends IGameStateMachine {
     pushState(newState: IGameState): void {

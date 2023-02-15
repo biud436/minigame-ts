@@ -1,8 +1,8 @@
-import { GameContext } from "../core/interfaces/CoreContext";
+import { GameContext } from "../core/interfaces/core-context";
 import { Matrix } from "../core/matrix";
 import { Rect } from "../core/rect";
 import { Texture2D } from "../core/texture-2d";
-import { ITextureManager } from "../core/interfaces/ITextureManager";
+import { ITextureManager } from "../core/interfaces/texture-manager.interface";
 
 export class TextureManager implements ITextureManager {
     private textureMap: Map<string, Texture2D> = new Map();

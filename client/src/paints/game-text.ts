@@ -1,10 +1,10 @@
-import { GameObject } from "../core/interfaces/GameObject";
+import { GameObject } from "../core/interfaces/game-object";
 import { Input } from "../core/input";
 import { Keys } from "../core/keys";
 import { Matrix } from "../core/matrix";
 import { Rect } from "../core/rect";
 import { Sound } from "../core/sound";
-import { GameContext } from "../core/interfaces/CoreContext";
+import { GameContext } from "../core/interfaces/core-context";
 
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;

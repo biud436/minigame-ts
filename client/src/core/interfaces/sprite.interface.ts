@@ -1,4 +1,4 @@
-import { GameObject } from "./GameObject";
+import { GameObject } from "./game-object";
 import { SpriteData } from "../sprite-data";
 
 export interface ISprite extends GameObject {

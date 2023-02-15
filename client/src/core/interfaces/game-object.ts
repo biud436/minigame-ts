@@ -1,4 +1,4 @@
-import { GameContext } from "./CoreContext";
+import { GameContext } from "./core-context";
 
 export abstract class GameObject {
     abstract update(elapsed: number): void;

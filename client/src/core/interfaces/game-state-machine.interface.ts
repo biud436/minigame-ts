@@ -1,5 +1,5 @@
-import { GameContext } from "./CoreContext";
-import { IGameState } from "./IGameState";
+import { GameContext } from "./core-context";
+import { IGameState } from "./game-state.interface";
 
 export abstract class IGameStateMachine {
     abstract pushState(newState: IGameState): void;

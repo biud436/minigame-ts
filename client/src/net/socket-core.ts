@@ -1,6 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { ConfigService } from "../core/config-service";
-import { GameObject } from "../core/interfaces/GameObject";
+import { GameObject } from "../core/interfaces/game-object";
 import { App } from "../core/app";
 
 export type Packet = {

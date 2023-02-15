@@ -5,7 +5,7 @@ import { GameCanvas } from "./game-canvas";
 import { GameErrorState } from "./game-error-state";
 import { GameStateMachine } from "./game-state-machine";
 import { Input } from "./input";
-import { GameContext, Nullable } from "./interfaces/CoreContext";
+import { GameContext, Nullable } from "./interfaces/core-context";
 import { MapState } from "../states/map-state";
 import { SocketCore } from "../net/socket-core";
 

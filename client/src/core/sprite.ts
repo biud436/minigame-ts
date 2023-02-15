@@ -1,7 +1,7 @@
 import { TextureManager } from "../manager/texture-manager";
-import { GameContext } from "./interfaces/CoreContext";
-import { GameObject } from "./interfaces/GameObject";
-import { ISprite } from "./interfaces/ISprite";
+import { GameContext } from "./interfaces/core-context";
+import { GameObject } from "./interfaces/game-object";
+import { ISprite } from "./interfaces/sprite.interface";
 import { Matrix } from "./matrix";
 import { Rect } from "./rect";
 import { SpriteData } from "./sprite-data";

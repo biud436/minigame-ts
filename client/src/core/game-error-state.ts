@@ -1,7 +1,7 @@
-import { GameObject } from "./interfaces/GameObject";
-import { IGameState } from "./interfaces/IGameState";
+import { GameObject } from "./interfaces/game-object";
+import { IGameState } from "./interfaces/game-state.interface";
 import { GameText } from "../paints/game-text";
-import { GameContext } from "./interfaces/CoreContext";
+import { GameContext } from "./interfaces/core-context";
 
 export class GameErrorState implements IGameState {
     static readonly ID = "ERROR";

@@ -1,5 +1,5 @@
-import { GameContext } from "./CoreContext";
-import { GameObject } from "./GameObject";
+import { GameContext } from "./core-context";
+import { GameObject } from "./game-object";
 
 export interface IGameState {
     update(elapsed: number): void;

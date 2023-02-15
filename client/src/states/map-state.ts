@@ -1,14 +1,14 @@
 import { App } from "../core/app";
 import { TextureManager } from "../manager/texture-manager";
 import { GameErrorState } from "../core/game-error-state";
-import { GameObject } from "../core/interfaces/GameObject";
-import { IGameState } from "../core/interfaces/IGameState";
+import { GameObject } from "../core/interfaces/game-object";
+import { IGameState } from "../core/interfaces/game-state.interface";
 import { GameText } from "../paints/game-text";
 import { Input } from "../core/input";
 import { Sound } from "../core/sound";
 import { Sprite } from "../core/sprite";
 import loadYaml from "../core/yaml-loader";
-import { GameContext } from "../core/interfaces/CoreContext";
+import { GameContext } from "../core/interfaces/core-context";
 import { PlanetEarth } from "../objects/planet-earth";
 import { SocketCore } from "../net/socket-core";
 

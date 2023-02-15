@@ -1,5 +1,5 @@
-import { GameContext } from "../core/interfaces/CoreContext";
-import { GameObject } from "../core/interfaces/GameObject";
+import { GameContext } from "../core/interfaces/core-context";
+import { GameObject } from "../core/interfaces/game-object";
 import { Rect } from "../core/rect";
 import { Sprite } from "../core/sprite";
 import { TextureManager } from "../manager/texture-manager";
