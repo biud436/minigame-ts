@@ -67,8 +67,8 @@ export class MapState implements IGameState {
 
         this.gameObjects.push(new PlanetEarth());
 
-        SocketCore.getInstance().addObserver("serverTime", (data) => {
-            App.getInstance().setServerTime(data as unknown as Date);
+        SocketCore.getInstance().addObserver<Date>("serverTime", (data) => {
+            App.getInstance().setServerTime(data);
         });
 
         return true;

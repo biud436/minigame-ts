@@ -12,7 +12,7 @@ export type PacketData = {
     planetEarth: Packet;
     serverTime: Packet;
 };
-export type TickCallback = (data: Packet) => void;
+export type TickCallback<T = Packet> = (data: T) => void;
 
 export class SocketCore {
     protected socket?: Socket;
@@ -81,8 +81,8 @@ export class SocketCore {
         });
     }
 
-    addObserver(id: keyof PacketData, callback: TickCallback) {
-        this.observers.set(id, callback);
+    addObserver<T = Packet>(id: keyof PacketData, callback: TickCallback<T>) {
+        this.observers.set(id, callback as TickCallback);
     }
 
     removeObserver(id: keyof PacketData) {
