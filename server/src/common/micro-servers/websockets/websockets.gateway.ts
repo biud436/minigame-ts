@@ -27,7 +27,7 @@ export class WebsocketsGateway
 {
     private logger: Logger = new Logger(WebsocketsGateway.name);
     private planetEarth: PlanetEarth = new PlanetEarth();
-    private intervalId: NodeJS.Timer;
+
     private TICK: number = 1000 / 60;
 
     private clients: Socket[] = [];
@@ -38,7 +38,7 @@ export class WebsocketsGateway
     constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
 
     afterInit(server: Server) {
-        this.intervalId = setInterval(() => {
+        const intervalId = setInterval(() => {
             this.planetEarth.updateAngle();
             this.server.emit('packet', {
                 planetEarth: {
@@ -48,22 +48,12 @@ export class WebsocketsGateway
                 },
             });
         }, this.TICK);
+
+        this.schedulerRegistry.addInterval('tick', intervalId);
     }
 
-    // @Cron(CronExpression.EVERY_SECOND)
-    // handleTicker() {
-    //     this.planetEarth.updateAngle();
-    //     this.server?.emit('packet', {
-    //         planetEarth: {
-    //             x: this.planetEarth.x,
-    //             y: this.planetEarth.y,
-    //             angle: this.planetEarth.angle,
-    //         },
-    //     });
-    // }
-
     onModuleDestroy() {
-        clearInterval(this.intervalId);
+        this.schedulerRegistry.deleteInterval('tick');
     }
 
     handleConnection(@ConnectedSocket() client: Socket, ...args: any[]) {
