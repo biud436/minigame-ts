@@ -1,4 +1,4 @@
-import { App } from "../main";
+import { App } from "../core/app";
 import { TextureManager } from "../manager/texture-manager";
 import { GameErrorState } from "../core/game-error-state";
 import { GameObject } from "../core/interfaces/GameObject";

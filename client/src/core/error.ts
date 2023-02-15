@@ -1,4 +1,4 @@
-import { App } from "../main";
+import { App } from "./app";
 import { GameErrorState } from "./game-error-state";
 import { GameText } from "../paints/game-text";
 
