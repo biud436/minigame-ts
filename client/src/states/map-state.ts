@@ -26,9 +26,20 @@ export class MapState implements IGameState {
 
             if (object instanceof GameText) {
                 object.setText(
-                    `${Input.getInstance()
-                        .getMouseX()
-                        .toString()} ${App.getInstance().getServerTime()}`
+                    [
+                        "< 마우스 좌표 >",
+                        `${Input.getInstance()
+                            .getMouseX()
+                            .toString()}, ${Input.getInstance()
+                            .getMouseY()
+                            .toString()}`,
+                        "< 서버 시간 >",
+                        new Intl.DateTimeFormat("ko-KR", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                        }).format(App.getInstance().getServerTime()),
+                    ].join("\r\n")
                 );
             }
         }

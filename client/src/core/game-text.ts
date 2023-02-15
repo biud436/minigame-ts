@@ -74,7 +74,15 @@ export class GameText extends GameObject {
         ctx.fillStyle = this.color;
         ctx.font = this.font;
 
-        ctx.fillText(this.text, this.position.x, this.position.y);
+        const texts = this.text.split(/[\r\n]+/i);
+        let startY = this.position.y;
+        const paddingY = 5;
+        const lineHeight = parseInt(this.font, 10);
+        for (let text of texts) {
+            ctx.fillText(text, this.position.x, startY);
+            startY += lineHeight;
+            startY += paddingY;
+        }
 
         this.width = ctx.measureText(this.text).width;
         this.height = parseInt(this.font, 10);
