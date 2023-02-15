@@ -70,22 +70,38 @@ export class GameText extends GameObject {
         this.updateTransform();
     }
 
+    getLineHeight(): number {
+        return parseInt(this.font, 10) ?? 1;
+    }
+
     draw(ctx: GameContext): void {
+        const lineHeight = this.getLineHeight();
+
         ctx.fillStyle = this.color;
         ctx.font = this.font;
 
+        this.drawTexts(ctx, lineHeight);
+
+        this.width = ctx.measureText(this.text).width;
+        this.height = lineHeight;
+    }
+
+    /**
+     * 다중 라인 텍스트를 묘화합니다.
+     *
+     * @param ctx
+     * @param lineHeight
+     */
+    drawTexts(ctx: GameContext, lineHeight: number) {
         const texts = this.text.split(/[\r\n]+/i);
         let startY = this.position.y;
         const paddingY = 5;
-        const lineHeight = parseInt(this.font, 10);
+
         for (let text of texts) {
             ctx.fillText(text, this.position.x, startY);
             startY += lineHeight;
             startY += paddingY;
         }
-
-        this.width = ctx.measureText(this.text).width;
-        this.height = parseInt(this.font, 10);
     }
 
     destroy(): void {
