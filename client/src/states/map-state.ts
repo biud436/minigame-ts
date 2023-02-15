@@ -10,6 +10,7 @@ import { Sprite } from "../core/sprite";
 import loadYaml from "../core/yaml-loader";
 import { GameContext } from "../core/interfaces/CoreContext";
 import { PlanetEarth } from "../objects/planet-earth";
+import { SocketCore } from "../net/socket-core";
 
 export class MapState implements IGameState {
     public static readonly ID = "MAP";
@@ -24,7 +25,11 @@ export class MapState implements IGameState {
             }
 
             if (object instanceof GameText) {
-                object.setText(`${Input.getInstance().getMouseX().toString()}`);
+                object.setText(
+                    `${Input.getInstance()
+                        .getMouseX()
+                        .toString()} ${App.getInstance().getServerTime()}`
+                );
             }
         }
     }
@@ -61,6 +66,10 @@ export class MapState implements IGameState {
             });
 
         this.gameObjects.push(new PlanetEarth());
+
+        SocketCore.getInstance().addObserver("serverTime", (data) => {
+            App.getInstance().setServerTime(data as unknown as Date);
+        });
 
         return true;
     }

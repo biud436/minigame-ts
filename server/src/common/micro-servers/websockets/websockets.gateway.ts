@@ -46,6 +46,11 @@ export class WebsocketsGateway
                     y: this.planetEarth.y,
                     angle: this.planetEarth.angle,
                 },
+                serverTime: {
+                    x: Date.now(),
+                    y: 0,
+                    angle: 0,
+                },
             });
         }, this.TICK);
 
@@ -74,7 +79,6 @@ export class WebsocketsGateway
      */
     @SubscribeMessage('connectEcho')
     async connect(@ConnectedSocket() client: Socket) {
-        // console.log('hello');
         client.broadcast.emit('newMember', JSON.stringify({}));
     }
 
@@ -89,12 +93,6 @@ export class WebsocketsGateway
             JSON.stringify({ message: data.message }),
         );
     }
-
-    // @SubscribeMessage('tick')
-    // async onTick(@ConnectedSocket() client: Socket) {
-    //     this.planetEarth.updateAngle();
-    //     client.broadcast.emit('tick', JSON.stringify(this.planetEarth));
-    // }
 
     @SubscribeMessage('pos:planet-earth')
     async onPosPlanetEarth(

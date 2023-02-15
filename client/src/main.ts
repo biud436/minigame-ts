@@ -23,6 +23,7 @@ export class App {
     private animationProviderId: number = 0;
 
     private static INSTANCE: App;
+    private serverTime: Date = new Date();
 
     private constructor() {}
 
@@ -37,6 +38,14 @@ export class App {
     start() {
         this.initWithCanvas();
         this.update(1.0);
+    }
+
+    setServerTime(serverTime: Date) {
+        this.serverTime = serverTime;
+    }
+
+    getServerTime() {
+        return this.serverTime;
     }
 
     getFSM(): GameStateMachine {

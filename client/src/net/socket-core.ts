@@ -10,15 +10,14 @@ export type Packet = {
 };
 export type PacketData = {
     planetEarth: Packet;
-
-    [key: string]: Packet;
+    serverTime: Packet;
 };
 export type TickCallback = (data: Packet) => void;
 
 export class SocketCore {
     protected socket?: Socket;
     private static INSTANCE: SocketCore;
-    private observers: Map<string, TickCallback> = new Map();
+    private observers: Map<keyof PacketData, TickCallback> = new Map();
 
     constructor() {
         this.initialize();
@@ -70,16 +69,23 @@ export class SocketCore {
     readPackets() {
         this.socket?.on("packet", (data: PacketData) => {
             this.observers.forEach((syncFunction, id) => {
-                syncFunction(data[id]);
+                if (id === "planetEarth") {
+                    syncFunction(data[id] as Packet);
+                } else if (id === "serverTime") {
+                    const time = data[id].x;
+                    const d = new Date(time);
+
+                    App.getInstance().setServerTime(d);
+                }
             });
         });
     }
 
-    addObserver(id: string, callback: TickCallback) {
+    addObserver(id: keyof PacketData, callback: TickCallback) {
         this.observers.set(id, callback);
     }
 
-    removeObserver(id: string) {
+    removeObserver(id: keyof PacketData) {
         this.observers.delete(id);
     }
 }

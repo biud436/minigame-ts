@@ -52,10 +52,6 @@ export class GameText extends GameObject {
         if (this.position.y > 500) {
             this.position.y = 50;
         }
-
-        if (Input.getInstance().isKeyDown(Keys.VK_SHIFT)) {
-            Sound.getInstance().playOnce("/assets/wind.ogg");
-        }
     }
 
     updateTransform() {
