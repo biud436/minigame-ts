@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Logger, OnModuleDestroy } from '@nestjs/common';
+import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule/dist';
 import {
     ConnectedSocket,
     MessageBody,
@@ -34,6 +35,8 @@ export class WebsocketsGateway
     @WebSocketServer()
     server: Server;
 
+    constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
+
     afterInit(server: Server) {
         this.intervalId = setInterval(() => {
             this.planetEarth.updateAngle();
@@ -46,6 +49,18 @@ export class WebsocketsGateway
             });
         }, this.TICK);
     }
+
+    // @Cron(CronExpression.EVERY_SECOND)
+    // handleTicker() {
+    //     this.planetEarth.updateAngle();
+    //     this.server?.emit('packet', {
+    //         planetEarth: {
+    //             x: this.planetEarth.x,
+    //             y: this.planetEarth.y,
+    //             angle: this.planetEarth.angle,
+    //         },
+    //     });
+    // }
 
     onModuleDestroy() {
         clearInterval(this.intervalId);
