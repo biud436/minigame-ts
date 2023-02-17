@@ -1,12 +1,13 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
+import { GameTransform } from 'src/game/units/interfaces/game-transform.interface';
 import { IGameObject } from '../../units/interfaces/game-object.interface';
 import { PlanetEarth } from '../../units/planet-earth';
 import { ServerTime } from '../../units/server-time';
+import { Packet } from './packet';
 
 export type GameObject<T = IGameObject> = Map<string, T>;
-export type Transform = Pick<IGameObject, 'x' | 'y' | 'angle'>;
-export type IRoomPacket = Transform & {
-    children?: Array<Transform>;
+export type IRoomPacket = GameTransform & {
+    children?: Array<GameTransform>;
 };
 
 @Injectable()
@@ -26,17 +27,17 @@ export class Rooms implements OnModuleInit {
         this.objects.delete(id);
     }
 
-    collectStaticPackets() {
-        const serializedData: Record<string, IRoomPacket> = {};
+    collectStaticPackets(): Packet {
+        const serializedData = new Packet();
 
         for (const [key, value] of this.objects) {
             value.update();
 
-            serializedData[key] = {
+            serializedData.add(key, {
                 x: value.x,
                 y: value.y,
                 angle: value.angle,
-            };
+            });
         }
 
         return serializedData;

@@ -12,8 +12,10 @@ import {
     WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { Rooms } from './commands/rooms.command';
+import { Rooms } from './core/rooms';
 import { PlanetEarth } from '../units/planet-earth';
+import { GameTransform } from '../units/interfaces/game-transform.interface';
+import { Players } from '../units/players';
 interface IMessage {
     message: string;
 }
@@ -38,12 +40,16 @@ export class NetworkService
     constructor(
         private readonly schedulerRegistry: SchedulerRegistry,
         private readonly rooms: Rooms,
+        private readonly players: Players,
     ) {}
 
     afterInit(server: Server) {
         const intervalId = setInterval(() => {
-            const packet = this.rooms.collectStaticPackets();
-            this.server.emit('packet', packet);
+            const packet = this.rooms
+                .collectStaticPackets()
+                .append(this.players.collectPackets());
+
+            this.server.emit('packet', packet.toJSON());
         }, this.TICK);
 
         this.schedulerRegistry.addInterval('tick', intervalId);
@@ -57,11 +63,13 @@ export class NetworkService
         this.logger.log('connect ' + client.id);
 
         this.clients.push(client);
+        this.players.add(client);
     }
 
     handleDisconnect(@ConnectedSocket() client: Socket) {
         this.logger.log('disconnect ' + client.id);
         this.clients = this.clients.filter((c) => c.id !== client.id);
+        this.players.remove(client.id);
     }
 
     /**
@@ -74,24 +82,11 @@ export class NetworkService
         client.broadcast.emit('newMember', JSON.stringify({}));
     }
 
-    @SubscribeMessage('message')
-    async onMessage(
-        @MessageBody() data: IMessage,
+    @SubscribeMessage('sync')
+    async onSync(
+        @MessageBody() transform: GameTransform,
         @ConnectedSocket() client: Socket,
     ) {
-        // 자신을 제외한 모든 클라이언트에 전송하기
-        client.broadcast.emit(
-            'message',
-            JSON.stringify({ message: data.message }),
-        );
-    }
-
-    @SubscribeMessage('pos:planet-earth')
-    async onPosPlanetEarth(
-        @MessageBody() data: any,
-        @ConnectedSocket() client: Socket,
-    ) {
-        this.logger.debug('pos:planet-earth ' + JSON.stringify(data));
-        client.broadcast.emit('pos:planet-earth', JSON.stringify(data));
+        this.players.sync(client.id, transform);
     }
 }
