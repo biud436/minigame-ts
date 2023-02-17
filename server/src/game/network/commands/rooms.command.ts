@@ -27,7 +27,7 @@ export class Rooms implements OnModuleInit {
         this.objects.delete(id);
     }
 
-    collectPackets() {
+    collectStaticPackets() {
         const serializedData: Record<string, IRoomPacket> = {};
 
         for (const [key, value] of this.objects) {

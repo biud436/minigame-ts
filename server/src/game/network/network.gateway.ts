@@ -42,7 +42,7 @@ export class NetworkService
 
     afterInit(server: Server) {
         const intervalId = setInterval(() => {
-            const packet = this.rooms.collectPackets();
+            const packet = this.rooms.collectStaticPackets();
             this.server.emit('packet', packet);
         }, this.TICK);
 
