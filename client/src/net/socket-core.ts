@@ -83,8 +83,8 @@ export class SocketCore {
 
           const keys = Object.keys(players);
 
-          keys.forEach((key) => {
-            const player = players[key];
+          keys.forEach((socketId) => {
+            const player = players[socketId];
 
             items.push(player);
           });
