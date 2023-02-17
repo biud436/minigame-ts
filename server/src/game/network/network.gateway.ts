@@ -12,21 +12,21 @@ import {
     WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { PlanetEarth } from './dto/planet-earth';
+import { Rooms } from './commands/rooms.command';
+import { PlanetEarth } from '../units/planet-earth';
 interface IMessage {
     message: string;
 }
 
 @WebSocketGateway({ cors: true })
-export class WebsocketsGateway
+export class NetworkService
     implements
         OnGatewayInit,
         OnGatewayConnection,
         OnGatewayDisconnect,
         OnModuleDestroy
 {
-    private logger: Logger = new Logger(WebsocketsGateway.name);
-    private planetEarth: PlanetEarth = new PlanetEarth();
+    private logger: Logger = new Logger(NetworkService.name);
 
     private TICK: number = 1000 / 60;
 
@@ -35,23 +35,15 @@ export class WebsocketsGateway
     @WebSocketServer()
     server: Server;
 
-    constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
+    constructor(
+        private readonly schedulerRegistry: SchedulerRegistry,
+        private readonly rooms: Rooms,
+    ) {}
 
     afterInit(server: Server) {
         const intervalId = setInterval(() => {
-            this.planetEarth.updateAngle();
-            this.server.emit('packet', {
-                planetEarth: {
-                    x: this.planetEarth.x,
-                    y: this.planetEarth.y,
-                    angle: this.planetEarth.angle,
-                },
-                serverTime: {
-                    x: Date.now(),
-                    y: 0,
-                    angle: 0,
-                },
-            });
+            const packet = this.rooms.collectPackets();
+            this.server.emit('packet', packet);
         }, this.TICK);
 
         this.schedulerRegistry.addInterval('tick', intervalId);

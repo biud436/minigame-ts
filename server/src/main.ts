@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { RedisIoAdapter } from './common/micro-servers/websockets/redis-io.adapter';
+import { RedisIoAdapter } from './game/network/redis-io.adapter';
 import { INestBootstrapApplication } from './common/interfaces/nest-bootstrap-application.interface';
 
 export class NestBootstrapApplication extends INestBootstrapApplication {

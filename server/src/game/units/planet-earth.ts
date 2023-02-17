@@ -1,10 +1,9 @@
-export class PlanetEarth {
-    /**
-     * 캡슐화를 하지 않음 (은닉화 X)
-     */
-    public x: number;
-    public y: number;
-    public angle: number;
+import { IGameObject } from './interfaces/game-object.interface';
+
+export class PlanetEarth implements IGameObject {
+    x: number;
+    y: number;
+    angle: number;
 
     constructor() {
         this.x = 0;
@@ -12,7 +11,7 @@ export class PlanetEarth {
         this.angle = 0;
     }
 
-    updateAngle() {
+    update() {
         this.angle += 0.05;
 
         if (this.angle > 360) {
