@@ -12,120 +12,122 @@ import { SocketCore } from "../net/socket-core";
 export type MiniGameBootstrapApplication = HTMLDivElement | null;
 
 export class App {
-    private application!: MiniGameBootstrapApplication;
-    private gameCanvas?: GameCanvas;
-    public gameContext: Nullable<GameContext> = null;
-    private stateMachine: GameStateMachine = new GameStateMachine();
-    private socketCore: SocketCore = new SocketCore();
+  private application!: MiniGameBootstrapApplication;
+  private gameCanvas?: GameCanvas;
+  public gameContext: Nullable<GameContext> = null;
+  private stateMachine: GameStateMachine = new GameStateMachine();
+  private socketCore: SocketCore = new SocketCore();
 
-    private lastElapsed: number = 0;
-    private animationProviderId: number = 0;
+  private lastElapsed: number = 0;
+  private animationProviderId: number = 0;
 
-    private static INSTANCE: App;
-    private serverTime: Date = new Date();
+  private static INSTANCE: App;
+  private serverTime: Date = new Date();
 
-    private constructor() {}
+  private constructor() {}
 
-    static getInstance(): App {
-        if (!App.INSTANCE) {
-            App.INSTANCE = new App();
-        }
-
-        return App.INSTANCE;
+  static getInstance(): App {
+    if (!App.INSTANCE) {
+      App.INSTANCE = new App();
     }
 
-    start() {
-        this.initWithCanvas();
-        this.update(1.0);
+    return App.INSTANCE;
+  }
+
+  start() {
+    this.initWithCanvas();
+    this.update(1.0);
+  }
+
+  setServerTime(serverTime: Date) {
+    this.serverTime = serverTime;
+  }
+
+  getServerTime() {
+    return this.serverTime;
+  }
+
+  getFSM(): GameStateMachine {
+    return this.stateMachine;
+  }
+
+  getGameCanvas(): GameCanvas {
+    return this.gameCanvas as GameCanvas;
+  }
+
+  initWithCanvas(): void {
+    const application = document.querySelector<HTMLDivElement>("#app");
+    if (!application) return;
+    this.gameCanvas = new GameCanvas(
+      ConfigService.getInstance().width,
+      ConfigService.getInstance().height
+    );
+    this.gameContext = this.gameCanvas.context;
+
+    application.appendChild(this.gameCanvas.element);
+
+    this.setApplication(application);
+
+    this.stateMachine.pushState(new MapState());
+  }
+
+  initiWithInput(): void {
+    Input.getInstance().initWithEventHandlers();
+  }
+
+  clear() {
+    const { gameContext: context } = this;
+    if (!context) return;
+
+    context.fillStyle = Colors.BLACK;
+    context.fillRect(
+      0,
+      0,
+      ConfigService.getInstance().width,
+      ConfigService.getInstance().height
+    );
+
+    return this;
+  }
+
+  render(): void {
+    const { gameContext: context } = this;
+    if (!context) return;
+    this.stateMachine.render(context);
+  }
+
+  getContext(): Nullable<GameContext> {
+    return this.gameCanvas ? this.gameContext : null;
+  }
+
+  setApplication(app: MiniGameBootstrapApplication): void {
+    this.application = app;
+  }
+
+  update(elapsed: number) {
+    this.clear();
+
+    if (this.lastElapsed === 0) {
+      this.lastElapsed = elapsed;
     }
+    this.stateMachine.update((elapsed - this.lastElapsed) / 1000);
 
-    setServerTime(serverTime: Date) {
-        this.serverTime = serverTime;
-    }
+    this.render();
+    Input.getInstance().update();
 
-    getServerTime() {
-        return this.serverTime;
-    }
+    this.animationProviderId = window.requestAnimationFrame(
+      this.update.bind(this)
+    );
+  }
 
-    getFSM(): GameStateMachine {
-        return this.stateMachine;
-    }
+  catchError(e: any) {
+    const fsm = this.getFSM();
+    fsm.pushState(
+      new GameErrorState(e.message ? e.message : Errors.DEFAULT_ERROR_MESSAGE)
+    );
+  }
 
-    initWithCanvas(): void {
-        const application = document.querySelector<HTMLDivElement>("#app");
-        if (!application) return;
-        this.gameCanvas = new GameCanvas(
-            ConfigService.getInstance().width,
-            ConfigService.getInstance().height
-        );
-        this.gameContext = this.gameCanvas.context;
-
-        application.appendChild(this.gameCanvas.element);
-
-        this.setApplication(application);
-
-        this.stateMachine.pushState(new MapState());
-    }
-
-    initiWithInput(): void {
-        Input.getInstance().initWithEventHandlers();
-    }
-
-    clear() {
-        const { gameContext: context } = this;
-        if (!context) return;
-
-        context.fillStyle = Colors.BLACK;
-        context.fillRect(
-            0,
-            0,
-            ConfigService.getInstance().width,
-            ConfigService.getInstance().height
-        );
-
-        return this;
-    }
-
-    render(): void {
-        const { gameContext: context } = this;
-        if (!context) return;
-        this.stateMachine.render(context);
-    }
-
-    getContext(): Nullable<GameContext> {
-        return this.gameCanvas ? this.gameContext : null;
-    }
-
-    setApplication(app: MiniGameBootstrapApplication): void {
-        this.application = app;
-    }
-
-    update(elapsed: number) {
-        this.clear();
-
-        if (this.lastElapsed === 0) {
-            this.lastElapsed = elapsed;
-        }
-        this.stateMachine.update((elapsed - this.lastElapsed) / 1000);
-
-        this.render();
-        Input.getInstance().update();
-
-        this.animationProviderId = window.requestAnimationFrame(
-            this.update.bind(this)
-        );
-    }
-
-    catchError(e: any) {
-        const fsm = this.getFSM();
-        fsm.pushState(
-            new GameErrorState(
-                e.message ? e.message : Errors.DEFAULT_ERROR_MESSAGE
-            )
-        );
-    }
-
-    dispose() {
-        Input.getInstance().removeEventHandlers();
-    }
+  dispose() {
+    Input.getInstance().removeEventHandlers();
+  }
 }
