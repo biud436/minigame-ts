@@ -11,8 +11,8 @@ export class Packet {
         this.raw[key] = value;
     }
 
-    append(packet: Packet) {
-        this.raw = { ...this.raw, ...packet.raw };
+    append(key: string, packet: Packet) {
+        this.raw = { ...this.raw, [key]: { ...this.raw[key], ...packet.raw } };
 
         return this;
     }

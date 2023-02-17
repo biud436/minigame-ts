@@ -47,7 +47,7 @@ export class NetworkService
         const intervalId = setInterval(() => {
             const packet = this.rooms
                 .collectStaticPackets()
-                .append(this.players.collectPackets());
+                .append('players', this.players.collectPackets());
 
             this.server.emit('packet', packet.toJSON());
         }, this.TICK);

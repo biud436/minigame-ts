@@ -43,6 +43,7 @@ export class Players implements IGameObject {
     }
 
     collectPackets(): Packet {
+        const root = new Packet();
         const serializedData = new Packet();
 
         for (const [key, value] of this.children) {
