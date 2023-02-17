@@ -4,7 +4,10 @@ import { PlanetEarth } from '../../units/planet-earth';
 import { ServerTime } from '../../units/server-time';
 
 export type GameObject<T = IGameObject> = Map<string, T>;
-export type IRoomPacket = Pick<IGameObject, 'x' | 'y' | 'angle'> & {};
+export type Transform = Pick<IGameObject, 'x' | 'y' | 'angle'>;
+export type IRoomPacket = Transform & {
+    children?: Array<Transform>;
+};
 
 @Injectable()
 export class Rooms implements OnModuleInit {
