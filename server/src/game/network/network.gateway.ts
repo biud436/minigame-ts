@@ -13,12 +13,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Rooms } from './core/rooms';
-import { PlanetEarth } from '../units/planet-earth';
 import { GameTransform } from '../units/interfaces/game-transform.interface';
 import { Players } from '../units/players';
-interface IMessage {
-    message: string;
-}
 
 @WebSocketGateway({ cors: true })
 export class NetworkService
@@ -28,14 +24,11 @@ export class NetworkService
         OnGatewayDisconnect,
         OnModuleDestroy
 {
-    private logger: Logger = new Logger(NetworkService.name);
-
-    private TICK: number = 1000 / 60;
-
-    private clients: Socket[] = [];
-
     @WebSocketServer()
     server: Server;
+
+    private TICK: number = 1000 / 60;
+    private clients: Socket[] = [];
 
     constructor(
         private readonly schedulerRegistry: SchedulerRegistry,
@@ -60,14 +53,11 @@ export class NetworkService
     }
 
     handleConnection(@ConnectedSocket() client: Socket, ...args: any[]) {
-        this.logger.log('connect ' + client.id);
-
         this.clients.push(client);
         this.players.add(client);
     }
 
     handleDisconnect(@ConnectedSocket() client: Socket) {
-        this.logger.log('disconnect ' + client.id);
         this.clients = this.clients.filter((c) => c.id !== client.id);
         this.players.remove(client.id);
     }
